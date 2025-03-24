@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../../core/extension/build_context_extension.dart';
+import '../../../core/extension/build_context_extension.dart';
 import '../register_screen.dart';
-import '../../../widget/custom_button.dart';
-import '../../../widget/custom_text_field.dart';
+import '../../../core/widget/custom_button.dart';
+import '../../../core/widget/custom_text_field.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});

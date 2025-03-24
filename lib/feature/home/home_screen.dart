@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-import '../../../data/model/post.dart';
-import '../upload/add_new_post_screen.dart';
+import '../../route/go_router_config.dart';
+import '../../data/model/post.dart';
 import 'widget/post_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -63,28 +64,47 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      appBar: AppBar(title: Text('Story Share')),
+      appBar: AppBar(
+        title: Text('Story Share'),
+        actions: [
+          IconButton(
+            icon: Icon(isDarkMode ? Icons.dark_mode : Icons.light_mode),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              context.goNamed(AppRoute.login.name);
+            },
+          ),
+        ],
+      ),
       body: Center(
         child: Container(
           constraints: BoxConstraints(maxWidth: 480),
-          padding: EdgeInsets.all(10),
-          child: ListView.builder(
+          child: ListView.separated(
             itemCount: posts.length,
             itemBuilder: (context, index) {
-              return PostCard(post: posts[index], timeAgo: timeAgo);
+              return Container(
+                padding: const EdgeInsets.all(8.0),
+                child: PostCard(post: posts[index], timeAgo: timeAgo),
+              );
             },
+            separatorBuilder: (context, index) => SizedBox(height: 10),
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddNewPostScreen()),
-          );
+          context.goNamed(AppRoute.addStory.name);
         },
-        child: Icon(Icons.add_a_photo_outlined),
+        backgroundColor: Theme.of(context).primaryColor,
+        child: Icon(
+          Icons.add_a_photo_outlined,
+          color: Theme.of(context).colorScheme.onPrimary,
+        ),
       ),
     );
   }

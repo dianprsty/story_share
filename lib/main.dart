@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'presentation/screen/home/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'route/go_router_config.dart';
+import 'core/style/theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final pref = await SharedPreferences.getInstance();
+
   runApp(const MainApp());
 }
 
@@ -10,6 +15,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomeScreen());
+    return MaterialApp.router(
+      theme: StoryShareTheme.lightTheme,
+      darkTheme: StoryShareTheme.darkTheme,
+      themeMode: ThemeMode.light,
+      routerConfig: GoRouterConfig.router(context),
+    );
   }
 }

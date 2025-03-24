@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../../data/model/post.dart';
+import '../../../data/model/post.dart';
 
 class PostCard extends StatelessWidget {
   final Post post;
@@ -13,30 +13,38 @@ class PostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+      color: Theme.of(context).cardColor,
+
+      elevation: 0,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(8),
+              bottom: Radius.circular(8),
+            ),
             child: CachedNetworkImage(
               imageUrl: post.photoUrl,
               width: double.infinity,
-              height: 400,
+
+              height: 240,
+
               fit: BoxFit.cover,
               placeholder:
                   (context, url) => Center(
                     child: Lottie.asset(
                       'assets/lotties/rocket.json',
-                      width: 100,
-                      height: 100,
+                      width: 32,
+                      height: 32,
                     ),
                   ),
               errorWidget:
                   (context, url, error) => Image.asset(
                     'assets/images/placeholder.png',
                     width: double.infinity,
-                    height: 400,
+                    height: 200,
                     fit: BoxFit.cover,
                   ),
             ),
@@ -64,7 +72,7 @@ class PostCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
             child: Text(post.description, style: TextStyle(fontSize: 14)),
           ),
         ],

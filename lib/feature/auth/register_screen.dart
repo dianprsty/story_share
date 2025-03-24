@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widget/custom_text_field.dart';
+import '../../core/widget/custom_text_field.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
