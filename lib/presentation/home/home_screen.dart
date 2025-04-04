@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-import '../../route/go_router_config.dart';
+import '../../core/route/go_router_config.dart';
 import '../../data/model/post.dart';
 import 'widget/post_card.dart';
 

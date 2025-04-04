@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
-import '../feature/auth/login_screen.dart';
-import '../feature/auth/register_screen.dart';
-import '../feature/home/home_screen.dart';
-import '../feature/upload/add_new_post_screen.dart';
+import '../../presentation/auth/login_screen.dart';
+import '../../presentation/auth/register_screen.dart';
+import '../../presentation/home/home_screen.dart';
+import '../../presentation/upload/add_new_post_screen.dart';
 
 enum AppRoute {
   home(name: 'home', path: '/'),

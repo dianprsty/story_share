@@ -6,12 +6,16 @@ class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
   final ButtonType buttonType;
+  final bool isLoading;
+  final bool isDisabled;
 
   const CustomButton({
     super.key,
     required this.text,
     required this.onPressed,
     required this.buttonType,
+    this.isLoading = false,
+    this.isDisabled = false,
   });
 
   @override
@@ -28,14 +32,18 @@ class CustomButton extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                onPressed: onPressed,
-                child: Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
-                ),
+
+                onPressed: isDisabled || isLoading ? null : onPressed,
+                child:
+                    isLoading
+                        ? const CircularProgressIndicator()
+                        : Text(
+                          text,
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
+                        ),
               )
               : OutlinedButton(
                 style: OutlinedButton.styleFrom(
@@ -44,8 +52,11 @@ class CustomButton extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                onPressed: onPressed,
-                child: Text(text, style: TextStyle(fontSize: 16)),
+                onPressed: isDisabled || isLoading ? null : onPressed,
+                child:
+                    isLoading
+                        ? const CircularProgressIndicator()
+                        : Text(text, style: TextStyle(fontSize: 16)),
               ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../core/extension/build_context_extension.dart';
-import '../register_screen.dart';
+import '../../../core/route/go_router_config.dart';
 import '../../../core/widget/custom_button.dart';
 import '../../../core/widget/custom_text_field.dart';
 
@@ -90,10 +91,7 @@ class _LoginFormState extends State<LoginForm> {
           CustomButton(
             text: 'Create an Account',
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => RegisterScreen()),
-              );
+             context.goNamed(AppRoute.register.name);
             },
             buttonType: ButtonType.outline,
           ),
