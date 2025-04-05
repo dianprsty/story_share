@@ -1,7 +1,8 @@
-import '../../domain/entities/result.dart';
+import '../entities/result.dart';
+import '../entities/user_entity.dart';
 
 abstract interface class AuthenticationRepository {
-  Future<Result<String>> login({
+  Future<Result<UserEntity>> login({
     required String email,
     required String password,
   });
@@ -13,4 +14,7 @@ abstract interface class AuthenticationRepository {
   });
 
   Future<Result<void>> logout();
+
+  Future<Result<String>> getToken();
+  Future<void> saveToken(String token);
 }

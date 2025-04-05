@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../domain/entities/user_entity.dart';
+
 part 'login_response.freezed.dart';
 part 'login_response.g.dart';
 
@@ -13,4 +15,9 @@ abstract class LoginResponse with _$LoginResponse {
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) =>
       _$LoginResponseFromJson(json);
+}
+
+
+extension LoginResponseExtension on LoginResponse {
+  UserEntity toUserEntity() => UserEntity(userId: userId, token: token, name: name);
 }

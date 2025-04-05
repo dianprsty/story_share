@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/const/general_state.dart';
+import '../../../core/constant/general_state.dart';
 import '../../../core/route/go_router_config.dart';
-import '../../../core/widget/custom_button.dart';
-import '../../../core/widget/custom_text_field.dart';
+import '../../shared/widget/custom_button.dart';
+import '../../shared/widget/custom_text_field.dart';
 import '../../../domain/usecase/register/register_param.dart';
 import '../bloc/auth_bloc.dart';
 import '../../../core/extension/build_context_extension.dart';

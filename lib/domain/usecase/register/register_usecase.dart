@@ -1,4 +1,4 @@
-import '../../../data/repository/authentication_repository.dart';
+import '../../repository/authentication_repository.dart';
 import '../../entities/result.dart';
 import '../usecase.dart';
 import 'register_param.dart';

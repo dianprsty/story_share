@@ -1,10 +1,11 @@
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../presentation/auth/login_screen.dart';
 import '../../presentation/auth/register_screen.dart';
 import '../../presentation/home/home_screen.dart';
 import '../../presentation/upload/add_new_post_screen.dart';
+import '../constant/strings.dart';
 
 enum AppRoute {
   home(name: 'home', path: '/'),
@@ -20,7 +21,7 @@ enum AppRoute {
 }
 
 class GoRouterConfig {
-  static GoRouter router(BuildContext context) => GoRouter(
+  static GoRouter router(SharedPreferences prefs) => GoRouter(
     initialLocation: AppRoute.home.path,
 
     routes: [
@@ -46,9 +47,19 @@ class GoRouterConfig {
       ),
     ],
 
-    redirect: (context, state) {
-      print(state.matchedLocation);
-      // Todo: Redirect logic
+    redirect: (context, state) async {
+      var currentLocation = state.matchedLocation;
+      bool isLogin = prefs.getString(tokenKey) != null;
+
+      if (!isLogin &&
+          currentLocation != AppRoute.login.path &&
+          currentLocation != AppRoute.register.path) {
+        return AppRoute.login.path;
+      } else if (isLogin &&
+          (currentLocation == AppRoute.login.path ||
+              currentLocation == AppRoute.register.path)) {
+        return AppRoute.home.path;
+      }
 
       return state.path;
     },

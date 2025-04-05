@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../core/route/go_router_config.dart';
-import '../../data/model/post.dart';
+import '../../domain/entities/post/post.dart';
+import '../auth/bloc/auth_bloc.dart';
 import 'widget/post_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -76,7 +78,32 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
-              context.goNamed(AppRoute.login.name);
+              showDialog(
+                context: context,
+                builder:
+                    (context) => AlertDialog(
+                      title: Text('Logout'),
+                      content: Text('Are you sure you want to logout?'),
+                      actions: [
+                        TextButton(
+                          child: Text('Cancel'),
+                          onPressed: () {
+                            context.pop();
+                          },
+                        ),
+                        TextButton(
+                          child: Text('Logout'),
+                          onPressed: () async {
+                            context.read<AuthBloc>().add(AuthEvent.logout());
+                            await Future.delayed(Duration(milliseconds: 500));
+                            if (context.mounted) {
+                              context.goNamed(AppRoute.login.name);
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+              );
             },
           ),
         ],
