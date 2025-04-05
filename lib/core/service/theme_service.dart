@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPreferencesService {
+import '../constant/strings.dart';
+
+class ThemeService {
   final SharedPreferences _preferences;
 
-  SharedPreferencesService(this._preferences);
+  ThemeService(this._preferences);
 
-  static const String _keyTheme = 'THEME';
+  bool _checkDarkMode() => _preferences.getBool(themeKey) ?? false;
 
-  String getTheme() =>
-      _preferences.getString(_keyTheme) ?? ThemeMode.light.name;
 
-  Future<void> setTheme(String value) =>
-      _preferences.setString(_keyTheme, value);
+  ThemeMode getTheme() =>
+      _checkDarkMode() ? ThemeMode.dark : ThemeMode.light;
+
+  void toggleTheme() {
+      _preferences.setBool(themeKey, !_checkDarkMode());
+
+  }
 }

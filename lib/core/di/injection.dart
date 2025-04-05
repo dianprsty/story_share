@@ -7,6 +7,7 @@ import '../../data/repository/authentication_repository_impl.dart';
 import '../../domain/usecase/login/login_usecase.dart';
 import '../../domain/usecase/logout/logout_usecase.dart';
 import '../../domain/usecase/register/register_usecase.dart';
+import '../../presentation/shared/bloc/theme/theme_bloc.dart';
 import '../service/api_service.dart';
 import '../service/theme_service.dart';
 
@@ -17,8 +18,10 @@ Future<void> setup() async {
   await GetIt.instance.isReady<SharedPreferences>();
   getIt.registerLazySingleton(() => ApiService());
   getIt.registerLazySingleton(
-    () => SharedPreferencesService(getIt<SharedPreferences>()),
+    () => ThemeService(getIt<SharedPreferences>()),
   );
+
+  getIt.registerLazySingleton(()=> ThemeBloc(getIt<ThemeService>()));
 
   getIt.registerLazySingleton(
     () => AuthenticationRemoteDatasourceImpl(apiService: getIt<ApiService>()),

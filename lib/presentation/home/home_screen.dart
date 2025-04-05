@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../../core/route/go_router_config.dart';
 import '../../domain/entities/post/post.dart';
 import '../auth/bloc/auth_bloc.dart';
+import '../shared/bloc/theme/theme_bloc.dart';
 import 'widget/post_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -66,14 +67,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
         title: Text('Story Share'),
         actions: [
-          IconButton(
-            icon: Icon(isDarkMode ? Icons.dark_mode : Icons.light_mode),
-            onPressed: () {},
+          BlocBuilder<ThemeBloc, ThemeState>(
+           
+            builder: (context, state) {
+              bool isDarkMode = state.themeMode == ThemeMode.dark;
+              return IconButton(
+                icon: Icon(isDarkMode ? Icons.dark_mode : Icons.light_mode),
+                onPressed: () {
+                  context.read<ThemeBloc>().add(ThemeEvent.toggleTheme());
+                },
+              );
+            },
           ),
           IconButton(
             icon: Icon(Icons.logout),
