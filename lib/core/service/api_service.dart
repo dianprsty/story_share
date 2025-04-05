@@ -2,11 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
+import '../constant/strings.dart';
+
 class ApiService {
   final Dio _dio =
       Dio(
           BaseOptions(
-            baseUrl: 'https://story-api.dicoding.dev/v1',
+            baseUrl: baseUrl,
             connectTimeout: const Duration(seconds: 60),
             receiveTimeout: const Duration(seconds: 60),
           ),
@@ -29,10 +31,11 @@ class ApiService {
     }
   }
 
-  Future<Response> fetchData(String url) async {
+  Future<Response> fetchDataWithToken({required String url, required String token}) async {
     try {
+      _dio.options.headers['Authorization'] = 'Bearer $token';
       final response = await _dio.get(url);
-      return response.data;
+      return response;
     } catch (e) {
       throw Exception('Failed to fetch data');
     }
@@ -74,3 +77,5 @@ class ApiService {
     }
   }
 }
+
+

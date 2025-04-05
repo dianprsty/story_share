@@ -1,4 +1,4 @@
-import '../../entities/user_entity.dart';
+import '../../entities/user/user_entity.dart';
 import '../../repository/authentication_repository.dart';
 import '../../entities/result.dart';
 import '../usecase.dart';
@@ -9,6 +9,7 @@ class LoginUsecase implements UseCase<Result<UserEntity>, LoginParam> {
 
   LoginUsecase({required AuthenticationRepository authenticationRepository})
     : _authenticationRepository = authenticationRepository;
+
   @override
   Future<Result<UserEntity>> call(LoginParam params) async {
     var result = await _authenticationRepository.login(

@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../core/constant/general_state.dart';
 import '../../../domain/entities/result.dart';
-import '../../../domain/entities/user_entity.dart';
+import '../../../domain/entities/user/user_entity.dart';
 import '../../../domain/usecase/login/login_param.dart';
 import '../../../domain/usecase/login/login_usecase.dart';
 import '../../../domain/usecase/logout/logout_usecase.dart';

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'core/di/injection.dart';
 import 'core/route/go_router_config.dart';
+import 'presentation/home/bloc/post_list_bloc.dart';
 import 'presentation/shared/bloc/theme/theme_bloc.dart';
 import 'presentation/shared/style/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,6 +25,10 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt<AuthBloc>()),
         BlocProvider(
           create: (context) => getIt<ThemeBloc>()..add(ThemeEvent.loadTheme()),
+        ),
+        BlocProvider(
+          create:
+              (context) => getIt<PostListBloc>()..add(PostListEvent.getPosts()),
         ),
       ],
 

@@ -1,4 +1,4 @@
-import '../../domain/entities/user_entity.dart';
+import '../../domain/entities/user/user_entity.dart';
 import '../model/login_response/login_response.dart';
 import '../../domain/entities/result.dart';
 import '../../domain/repository/authentication_repository.dart';

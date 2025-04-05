@@ -1,8 +1,11 @@
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../domain/entities/post/post.dart';
+import '../../domain/entities/post/post_entity.dart';
 import '../../presentation/auth/login_screen.dart';
 import '../../presentation/auth/register_screen.dart';
+import '../../presentation/detail/detail_screen.dart';
 import '../../presentation/home/home_screen.dart';
 import '../../presentation/upload/add_new_post_screen.dart';
 import '../constant/strings.dart';
@@ -12,7 +15,7 @@ enum AppRoute {
   login(name: 'login', path: '/login'),
   register(name: 'register', path: '/register'),
   addStory(name: 'add-story', path: '/add-story'),
-  detailStory(name: 'detail', path: '/detail');
+  detailStory(name: 'detail', path: '/detail/:id');
 
   const AppRoute({required this.name, required this.path});
 
@@ -44,6 +47,15 @@ class GoRouterConfig {
         path: AppRoute.addStory.path,
         name: AppRoute.addStory.name,
         builder: (context, state) => const AddNewPostScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.detailStory.path,
+        name: AppRoute.detailStory.name,
+        builder: (context, state) {
+          // final id = state.pathParameters['id']!;
+          final post = state.extra as PostEntity;
+          return PostDetailScreen(post: post);
+        },
       ),
     ],
 

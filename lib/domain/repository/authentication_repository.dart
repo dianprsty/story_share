@@ -1,5 +1,5 @@
 import '../entities/result.dart';
-import '../entities/user_entity.dart';
+import '../entities/user/user_entity.dart';
 
 abstract interface class AuthenticationRepository {
   Future<Result<UserEntity>> login({

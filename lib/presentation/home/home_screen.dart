@@ -3,10 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../../core/constant/general_state.dart';
 import '../../core/route/go_router_config.dart';
 import '../../domain/entities/post/post.dart';
+import '../../domain/entities/post/post_entity.dart';
 import '../auth/bloc/auth_bloc.dart';
 import '../shared/bloc/theme/theme_bloc.dart';
+import '../shared/widget/custom_button.dart';
+import 'bloc/post_list_bloc.dart';
 import 'widget/post_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -72,7 +76,6 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text('Story Share'),
         actions: [
           BlocBuilder<ThemeBloc, ThemeState>(
-           
             builder: (context, state) {
               bool isDarkMode = state.themeMode == ThemeMode.dark;
               return IconButton(
@@ -116,26 +119,66 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: Center(
-        child: Container(
-          constraints: BoxConstraints(maxWidth: 480),
-          child: ListView.separated(
-            itemCount: posts.length,
-            itemBuilder: (context, index) {
-              return Container(
-                padding: const EdgeInsets.all(8.0),
-                child: PostCard(post: posts[index], timeAgo: timeAgo),
-              );
-            },
-            separatorBuilder: (context, index) => SizedBox(height: 10),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await Future.delayed(Duration(seconds: 1));
+          if (context.mounted) {
+            context.read<PostListBloc>().add(PostListEvent.getPosts());
+          }
+        },
+        child: Center(
+          child: Container(
+            constraints: BoxConstraints(maxWidth: 480),
+            child: BlocBuilder<PostListBloc, PostListState>(
+              builder: (context, state) {
+                return switch (state.status) {
+                  GeneralState.loading => const CircularProgressIndicator(),
+                  GeneralState.success => ListView.separated(
+                    itemCount: state.posts.length,
+                    itemBuilder: (context, index) {
+                      PostEntity post = state.posts[index];
+                      return Container(
+                        padding: const EdgeInsets.all(8.0),
+                        child: PostCard(post: post, timeAgo: timeAgo),
+                      );
+                    },
+                    separatorBuilder: (context, index) => SizedBox(height: 10),
+                  ),
+                  _ => Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          state.message.isEmpty
+                              ? 'Initial state'
+                              : state.message,
+                        ),
+                        SizedBox(
+                          width: 200,
+                          child: CustomButton(
+                            text: 'Retry',
+                            onPressed: () {
+                              context.read<PostListBloc>().add(
+                                PostListEvent.getPosts(),
+                              );
+                            },
+                            buttonType: ButtonType.outline,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                };
+              },
+            ),
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.goNamed(AppRoute.addStory.name);
+          context.pushNamed(AppRoute.addStory.name);
         },
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         child: Icon(
           Icons.add_a_photo_outlined,
           color: Theme.of(context).colorScheme.onPrimary,
