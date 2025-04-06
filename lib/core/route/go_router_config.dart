@@ -1,13 +1,13 @@
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../domain/entities/post/post.dart';
 import '../../domain/entities/post/post_entity.dart';
 import '../../presentation/auth/login_screen.dart';
 import '../../presentation/auth/register_screen.dart';
 import '../../presentation/detail/detail_screen.dart';
 import '../../presentation/home/home_screen.dart';
 import '../../presentation/upload/add_new_post_screen.dart';
+import '../../presentation/upload/camera_capture_page.dart';
 import '../constant/strings.dart';
 
 enum AppRoute {
@@ -15,7 +15,8 @@ enum AppRoute {
   login(name: 'login', path: '/login'),
   register(name: 'register', path: '/register'),
   addStory(name: 'add-story', path: '/add-story'),
-  detailStory(name: 'detail', path: '/detail/:id');
+  detailStory(name: 'detail', path: '/detail/:id'),
+  camera(name: 'camera', path: '/camera');
 
   const AppRoute({required this.name, required this.path});
 
@@ -57,6 +58,11 @@ class GoRouterConfig {
           return PostDetailScreen(post: post);
         },
       ),
+      GoRoute(
+        path: AppRoute.camera.path,
+        name: AppRoute.camera.name,
+        builder: (context, state) => const CameraCapturePage(),
+      )
     ],
 
     redirect: (context, state) async {

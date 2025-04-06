@@ -31,7 +31,10 @@ class ApiService {
     }
   }
 
-  Future<Response> fetchDataWithToken({required String url, required String token}) async {
+  Future<Response> fetchDataWithToken({
+    required String url,
+    required String token,
+  }) async {
     try {
       _dio.options.headers['Authorization'] = 'Bearer $token';
       final response = await _dio.get(url);
@@ -68,8 +71,14 @@ class ApiService {
     }
   }
 
-  Future<Response> uploadFile(String url, FormData formData) async {
+  Future<Response> uploadFileWithToken({
+    required String url,
+    required String token,
+    required FormData formData,
+  }) async {
     try {
+      _dio.options.headers['Authorization'] = 'Bearer $token';
+      _dio.options.headers['Content-Type'] = 'multipart/form-data';
       final response = await _dio.post(url, data: formData);
       return response;
     } catch (e) {
@@ -77,5 +86,3 @@ class ApiService {
     }
   }
 }
-
-

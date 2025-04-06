@@ -1,12 +1,15 @@
+import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/constant/strings.dart';
 import '../../../core/service/api_service.dart';
 import '../../../domain/entities/result.dart';
 import '../../model/post/post_model.dart';
+import '../../model/post/upload_request_model.dart';
 
 abstract interface class PostRemoteDatasource {
   Future<Result<List<PostModel>>> getPosts();
+  Future<Result<String>> uploadPost(UploadRequestModel data);
 }
 
 class PostRemoteDatasourceImpl implements PostRemoteDatasource {
@@ -32,13 +35,47 @@ class PostRemoteDatasourceImpl implements PostRemoteDatasource {
 
       if (response.statusCode == 200) {
         return Result.success(
-          (response.data['listStory'] as List).map((e) => PostModel.fromJson(e)).toList(),
+          (response.data['listStory'] as List)
+              .map((e) => PostModel.fromJson(e))
+              .toList(),
         );
       } else {
         return Result.failed('Failed to get stories');
       }
     } catch (e) {
       return Result.failed('Failed to get stories');
+    }
+  }
+
+  @override
+  Future<Result<String>> uploadPost(UploadRequestModel data) async {
+    try {
+      final formData = FormData.fromMap({
+        'description': data.description,
+        'photo': await MultipartFile.fromFile(
+          data.image.path,
+          filename: data.image.path.split('/').last,
+        ),
+      });
+
+      String token = _sharedPreferences.getString(tokenKey) ?? '';
+      if (token.isEmpty) return Result.failed('Unauthorized');
+
+      var response = await _apiService.uploadFileWithToken(
+        url: '/stories',
+        token: token,
+        formData: formData,
+      );
+
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        return Result.success(response.data['message']);
+      } else {
+        return Result.failed(
+          response.data['message'] ?? 'Failed to upload post',
+        );
+      }
+    } catch (e) {
+      return Result.failed('Failed to upload post');
     }
   }
 }

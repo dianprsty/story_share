@@ -8,6 +8,7 @@ import 'presentation/shared/style/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'presentation/auth/bloc/auth_bloc.dart';
+import 'presentation/upload/bloc/upload_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,8 +29,9 @@ class MainApp extends StatelessWidget {
         ),
         BlocProvider(
           create:
-              (context) => getIt<PostListBloc>()..add(PostListEvent.getPosts()),
+              (context) => getIt<PostListBloc>()
         ),
+        BlocProvider(create: (context) => getIt<UploadBloc>()),
       ],
 
       child: BlocBuilder<ThemeBloc, ThemeState>(

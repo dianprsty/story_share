@@ -6,13 +6,13 @@ import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../core/route/go_router_config.dart';
+import '../../../core/utils/date_utils.dart';
 import '../../../domain/entities/post/post_entity.dart';
 
 class PostCard extends StatelessWidget {
   final PostEntity post;
-  final String Function(String) timeAgo;
 
-  const PostCard({super.key, required this.post, required this.timeAgo});
+  const PostCard({super.key, required this.post});
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class PostCard extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        timeAgo(post.createdAt ?? ''),
+                        timeAgoFromString(post.createdAt ?? ''),
                         style: TextStyle(color: Colors.grey, fontSize: 12),
                       ),
                     ],

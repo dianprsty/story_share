@@ -12,9 +12,11 @@ import '../../domain/usecase/get_posts/get_posts_usecase.dart';
 import '../../domain/usecase/login/login_usecase.dart';
 import '../../domain/usecase/logout/logout_usecase.dart';
 import '../../domain/usecase/register/register_usecase.dart';
+import '../../domain/usecase/upload_post/upload_post_usecase.dart';
 import '../../presentation/auth/bloc/auth_bloc.dart';
 import '../../presentation/home/bloc/post_list_bloc.dart';
 import '../../presentation/shared/bloc/theme/theme_bloc.dart';
+import '../../presentation/upload/bloc/upload_bloc.dart';
 import '../service/api_service.dart';
 import '../service/theme_service.dart';
 
@@ -67,6 +69,7 @@ Future<void> setup() async {
     () => LogoutUsecase(authenticationRepository: getIt()),
   );
   getIt.registerLazySingleton(() => GetPostsUsecase(postRepository: getIt()));
+  getIt.registerLazySingleton(() => UploadPostUsecase(postRepository: getIt()));
 
   // ---------------- Bloc ----------------
   getIt.registerFactory(() => ThemeBloc(getIt()));
@@ -80,4 +83,5 @@ Future<void> setup() async {
   );
 
   getIt.registerFactory(() => PostListBloc(getPostsUsecase: getIt()));
+  getIt.registerFactory(()=> UploadBloc(uploadPostUsecase: getIt()));
 }
