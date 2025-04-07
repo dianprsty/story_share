@@ -1,7 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../domain/entities/post/post_entity.dart';
 import '../../presentation/auth/login_screen.dart';
 import '../../presentation/auth/register_screen.dart';
 import '../../presentation/detail/detail_screen.dart';
@@ -53,9 +52,8 @@ class GoRouterConfig {
         path: AppRoute.detailStory.path,
         name: AppRoute.detailStory.name,
         builder: (context, state) {
-          // final id = state.pathParameters['id']!;
-          final post = state.extra as PostEntity;
-          return PostDetailScreen(post: post);
+          final id = state.pathParameters['id']!;
+          return PostDetailScreen(id: id);
         },
       ),
       GoRoute(

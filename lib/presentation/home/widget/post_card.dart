@@ -20,7 +20,6 @@ class PostCard extends StatelessWidget {
       onTap:
           () => context.pushNamed(
             AppRoute.detailStory.name,
-            extra: post,
             pathParameters: {'id': post.id ?? ''},
           ),
       child: Card(
@@ -78,7 +77,7 @@ class PostCard extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        timeAgoFromString(post.createdAt ?? ''),
+                        timeAgoFromString(post.createdAt ?? '', context),
                         style: TextStyle(color: Colors.grey, fontSize: 12),
                       ),
                     ],

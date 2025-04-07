@@ -32,8 +32,6 @@ class _LoginFormState extends State<LoginForm> {
           ),
         ),
       );
-    } else {
-      context.showSnackBar('Login Failed. Check your inputs.', success: false);
     }
   }
 
@@ -57,21 +55,16 @@ class _LoginFormState extends State<LoginForm> {
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your email';
+                return context.l10n.emailEmptyValidation;
               }
-              // final emailRegex = RegExp(
-              //   r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\$',
-              // );
-              // if (!emailRegex.hasMatch(value)) {
-              //   return 'Enter a valid email address';
-              // }
+
               return null;
             },
           ),
           SizedBox(height: 15),
           CustomTextField(
             controller: passwordController,
-            labelText: 'Password',
+            labelText: context.l10n.password,
             icon: Icons.lock,
             obscureText: _obscurePassword,
             suffixIcon: IconButton(
@@ -86,10 +79,10 @@ class _LoginFormState extends State<LoginForm> {
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your password';
+                return context.l10n.passwordEmptyValidation;
               }
-              if (value.length < 6) {
-                return 'Password must be at least 6 characters';
+              if (value.length < 8) {
+                return context.l10n.passwordLengthValidation;
               }
               return null;
             },
@@ -97,8 +90,11 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(height: 20),
           BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
-               if (state.status == GeneralState.success) {
-                context.showSnackBar('Login Success', success: true);
+              if (state.status == GeneralState.success) {
+                context.showSnackBar(
+                  context.l10n.successLoginMessage,
+                  success: true,
+                );
                 context.goNamed(AppRoute.home.name);
               } else if (state.status == GeneralState.error) {
                 context.showSnackBar(state.message, success: false);
@@ -106,7 +102,7 @@ class _LoginFormState extends State<LoginForm> {
             },
             builder: (context, state) {
               return CustomButton(
-                text: 'Login',
+                text: context.l10n.login,
                 isLoading: state.status == GeneralState.loading,
                 onPressed: () => _login(context),
                 buttonType: ButtonType.primary,
@@ -115,12 +111,12 @@ class _LoginFormState extends State<LoginForm> {
           ),
           SizedBox(height: 15),
           Text(
-            "Don't have an account?",
+            context.l10n.dontHaveAccount,
             style: TextStyle(fontSize: 14, color: Colors.grey),
           ),
           SizedBox(height: 10),
           CustomButton(
-            text: 'Create an Account',
+            text: context.l10n.createAccount,
             onPressed: () {
               context.goNamed(AppRoute.register.name);
             },

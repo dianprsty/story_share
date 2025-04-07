@@ -10,6 +10,7 @@ import '../../model/post/upload_request_model.dart';
 abstract interface class PostRemoteDatasource {
   Future<Result<List<PostModel>>> getPosts();
   Future<Result<String>> uploadPost(UploadRequestModel data);
+  Future<Result<PostModel>> getPostById(String id);
 }
 
 class PostRemoteDatasourceImpl implements PostRemoteDatasource {
@@ -76,6 +77,26 @@ class PostRemoteDatasourceImpl implements PostRemoteDatasource {
       }
     } catch (e) {
       return Result.failed('Failed to upload post');
+    }
+  }
+
+  @override
+  Future<Result<PostModel>> getPostById(String id) async {
+    try {
+      final result = await _apiService.fetchDataWithToken(
+        url: '/stories/$id',
+        token: _sharedPreferences.getString(tokenKey) ?? '',
+      );
+
+      if (result.statusCode == 200) {
+        return Result.success(PostModel.fromJson(result.data['story']));
+      } else {
+        return Result.failed(
+          result.data['message'] ?? 'Failed to get post details',
+        );
+      }
+    } catch (e) {
+      return Result.failed('Failed to get post details');
     }
   }
 }

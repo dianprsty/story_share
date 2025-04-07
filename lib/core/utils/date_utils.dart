@@ -1,6 +1,9 @@
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
-String timeAgoFromString(String dateString) {
+import '../extension/build_context_extension.dart';
+
+String timeAgoFromString(String dateString, BuildContext context) {
   final date = DateTime.tryParse(dateString);
 
   if (date == null) return 'Invalid date';
@@ -9,13 +12,13 @@ String timeAgoFromString(String dateString) {
   final diff = now.difference(date);
 
   if (diff.inSeconds < 60) {
-    return 'Just now';
+    return context.l10n.justNow;
   } else if (diff.inMinutes < 60) {
-    return '${diff.inMinutes} minute${diff.inMinutes > 1 ? 's' : ''} ago';
+    return context.l10n.minutesAgo(diff.inMinutes);
   } else if (diff.inHours < 24) {
-    return '${diff.inHours} hour${diff.inHours > 1 ? 's' : ''} ago';
+    return context.l10n.hoursAgo(diff.inHours);
   } else if (diff.inDays < 7) {
-    return '${diff.inDays} day${diff.inDays > 1 ? 's' : ''} ago';
+    return context.l10n.daysAgo(diff.inDays);
   } else {
     return DateFormat('dd MMMM yyyy').format(date);
   }

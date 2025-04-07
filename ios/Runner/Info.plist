@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Story Share Dicoding</string>
+	<string>Story Share</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>story_share_dicoding</string>
+	<string>Story Share</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -49,5 +49,10 @@
 	<string>Access camera for uploading image</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Access microphone to record audio</string>
+	  <key>CFBundleLocalizations</key>
+  <array>
+    <string>id</string>
+    <string>en</string>
+  </array>
 </dict>
 </plist>

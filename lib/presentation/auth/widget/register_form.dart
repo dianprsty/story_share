@@ -35,9 +35,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
         ),
       );
-    } else {
-      context.showSnackBar('Login Failed. Check your inputs.', success: false);
-    }
+    } 
   }
 
   @override
@@ -56,12 +54,12 @@ class _RegisterFormState extends State<RegisterForm> {
         children: [
           CustomTextField(
             controller: nameController,
-            labelText: 'Name',
+            labelText: context.l10n.name,
             icon: Icons.person,
             keyboardType: TextInputType.name,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your name';
+                return context.l10n.nameEmptyValidation;
               }
 
               return null;
@@ -76,21 +74,15 @@ class _RegisterFormState extends State<RegisterForm> {
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your email';
+                return context.l10n.emailEmptyValidation;
               }
-              // final emailRegex = RegExp(
-              //   r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\$',
-              // );
-              // if (!emailRegex.hasMatch(value)) {
-              //   return 'Enter a valid email address';
-              // }
               return null;
             },
           ),
           SizedBox(height: 15),
           CustomTextField(
             controller: passwordController,
-            labelText: 'Password',
+            labelText: context.l10n.password,
             icon: Icons.lock,
             obscureText: _obscurePassword,
             suffixIcon: IconButton(
@@ -105,10 +97,10 @@ class _RegisterFormState extends State<RegisterForm> {
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your password';
+                return context.l10n.passwordEmptyValidation;
               }
-              if (value.length < 6) {
-                return 'Password must be at least 6 characters';
+              if (value.length < 8) {
+                return context.l10n.passwordLengthValidation;
               }
               return null;
             },
@@ -126,7 +118,7 @@ class _RegisterFormState extends State<RegisterForm> {
             builder: (context, state) {
               return CustomButton(
                 isLoading: state.status == GeneralState.loading,
-                text: 'Register',
+                text: context.l10n.register,
                 onPressed: () => _register(context),
                 buttonType: ButtonType.primary,
               );
@@ -134,12 +126,12 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           SizedBox(height: 15),
           Text(
-            'Already have an account?',
+            context.l10n.haveAccount,
             style: TextStyle(fontSize: 14, color: Colors.grey),
           ),
           SizedBox(height: 10),
           CustomButton(
-            text: 'Login',
+            text: context.l10n.login,
             onPressed: () {
               context.goNamed(AppRoute.login.name);
             },

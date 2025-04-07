@@ -1,0 +1,147 @@
+{
+  "@@locale": "id",
+  "@@author": "Dian Prasetyo",
+  "name": "Nama",
+  "@name": {
+    "description": "Text untuk nama"
+  },
+  "password": "Kata Sandi",
+  "@password": {
+    "description": "Text untuk kata sandi"
+  },
+  "login": "Masuk",
+  "@login": {
+    "description": "Text untuk tombol login"
+  },
+  "loginTitle": "Selamat datang Kembali",
+  "@loginTitle": {
+    "description": "Judul utama halaman login"
+  },
+  "loginSubtitle": "Masuk dan mulai bagikan ceritamu!",
+  "@loginSubtitle": {
+    "description": "Sub judul halaman login"
+  },
+  "dontHaveAccount": "Belum punya akun?",
+  "@dontHaveAccount": {
+    "description": "Text konfirmasi belum punya akun"
+  },
+  "createAccount": "Buat akun baru",
+  "@createAccount": {
+    "description": "Text untuk tombol buat akun"
+  },
+  "nameEmptyValidation": "Nama tidak boleh kosong",
+  "@nameEmptyValidation": {
+    "description": "Text validasi nama kosong"
+  },
+  "passwordEmptyValidation": "Kata sandi tidak boleh kosong",
+  "@passwordEmptyValidation": {
+    "description": "Text validasi kata sandi kosong"
+  },
+  "passwordLengthValidation": "Kata sandi minimal 8 karakter",
+  "@passwordLengthValidation": {
+    "description": "Text validasi kata sandi minimal 8 karakter"
+  },
+  "emailEmptyValidation": "Email tidak boleh kosong",
+  "@emailEmptyValidation": {
+    "description": "Text validasi email kosong"
+  },
+  "failedLoginMessage": "Email atau kata sandi salah, silahkan coba lagi",
+  "@failedLoginMessage": {
+    "description": "Text validasi email atau kata sandi salah"
+  },
+  "successLoginMessage": "Login berhasil",
+  "@successLoginMessage": {
+    "description": "Text validasi berhasil login"
+  },
+  "registerTitle": "Yuk buat akun Story Share",
+  "@registerTitle": {
+    "description": "Text judul halaman register"
+  },
+  "registerSubtitle": "Buat akun dan mulai bagikan ceritamu!",
+  "@registerSubtitle": {
+    "description": "Text sub judul halaman register"
+  },
+  "register": "Daftar",
+  "@register": {
+    "description": "Text untuk tombol daftar"
+  },
+  "haveAccount": "Sudah punya akun?",
+  "@haveAccount": {
+    "description": "Text konfirmasi sudah punya akun"
+  },
+  "uploadStory": "Unggah Cerita",
+  "@uploadStory": {
+    "description": "Text title halaman unggah cerita"
+  },
+  "chooseImage": "Pilih Gambar",
+  "@chooseImage": {
+    "description": "Text untuk widget gambar saat kosong"
+  },
+  "upload": "Unggah",
+  "@upload": {
+    "description": "Text untuk tombol unggah"
+  },
+  "description": "Deskripsi",
+  "@description": {
+    "description": "Text untuk label field deskripsi"
+  },
+  "camera": "Kamera",
+  "@camera": {
+    "description": "Text untuk tombol kamera"
+  },
+  "gallery": "Galeri",
+  "@gallery": {
+    "description": "Text untuk tombol galeri"
+  },
+  "uploadValidation": "Gambar dan deskripsi tidak boleh kosong",
+  "@uploadValidation": {
+    "description": "Text validasi field gambar dan deskripsi harus diidi"
+  },
+  "uploadSuccess": "Berhasil mengunggah cerita",
+  "@uploadSuccess": {
+    "description": "Text validasi unggah berhasil"
+  },
+  "logout": "Keluar",
+  "@logout": {
+    "description": "Text untuk judul dan tombol logout"
+  },
+  "logoutConfirmation": "Apakah kamu yakin ingin keluar?",
+  "@logoutConfirmation": {
+    "description": "Text konfirmasi keluar"
+  },
+  "cancel": "Batal",
+  "@cancel": {
+    "description": "Text untuk tombol batal"
+  },
+  "justNow": "Baru saja",
+  "@justNow": {
+    "description": "Text post baru dibawah 1 menit"
+  },
+  "minutesAgo": "{time, plural, one {{time} menit yang lalu} other {{time} menit yang lalu}}",
+  "@minutesAgo": {
+    "description": "Text post baru dibawah 1 jam",
+    "placeholders": {
+      "time": {
+        "type": "int"
+      }
+    }
+  },
+  "hoursAgo": "{time, plural, one {{time} jam yang lalu} other {{time} jam yang lalu}}",
+  "@hoursAgo": {
+    "description": "Text post baru dibawah 1 hari",
+    "placeholders": {
+      "time": {
+        "type": "int"
+      }
+    }
+  },
+  "daysAgo": "{time, plural, one {{time} hari yang lalu} other {{time} hari yang lalu}}",
+  "@daysAgo": {
+    "description": "Text post baru dibawah 1 minggu",
+    "placeholders": {
+      "time": {
+        "type": "int"
+      }
+    }
+  }
+}

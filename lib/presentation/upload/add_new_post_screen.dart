@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,7 +37,7 @@ class _AddNewPostScreenState extends State<AddNewPostScreen> {
   Future<void> _uploadPost(BuildContext context) async {
     if (_selectedImage == null || _descriptionController.text.isEmpty) {
       context.showSnackBar(
-        'Please select an image and add a description.',
+        context.l10n.uploadValidation,
         success: false,
       );
       return;
@@ -61,12 +62,17 @@ class _AddNewPostScreenState extends State<AddNewPostScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(title: const Text('Upload Post')),
+      appBar: AppBar(title: Text(context.l10n.uploadStory)),
       body: BlocConsumer<UploadBloc, UploadState>(
         listener: (context, state) {
           if (state.status == GeneralState.success) {
             context.read<PostListBloc>().add(PostListEvent.getPosts());
             context.goNamed(AppRoute.home.name);
+            context.showSnackBar(context.l10n.uploadSuccess);
+          }
+
+          if (state.status == GeneralState.error) {
+            context.showSnackBar(state.message, success: false);
           }
         },
         builder: (context, state) {
@@ -78,7 +84,11 @@ class _AddNewPostScreenState extends State<AddNewPostScreen> {
                   if (_selectedImage != null)
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12),
-                      child: Image.file(
+                      child: kIsWeb ? Image.network(
+                        _selectedImage!.path,
+                        height: 200,
+                        fit: BoxFit.cover,
+                      ): Image.file(
                         _selectedImage!,
                         height: 200,
                         fit: BoxFit.cover,
@@ -89,25 +99,30 @@ class _AddNewPostScreenState extends State<AddNewPostScreen> {
                       height: 200,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        color: Colors.grey[300],
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
-                      child: const Center(child: Text('Choose an image')),
+                      child: Center(
+                        child: Text(
+                          context.l10n.chooseImage,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onTertiary,
+                          ),
+                        ),
+                      ),
                     ),
-
                   const SizedBox(height: 16),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      ElevatedButton.icon(
+                      OutlinedButton.icon(
                         onPressed: _openCamera,
                         icon: const Icon(Icons.camera_alt),
-                        label: const Text('Kamera'),
+                        label: Text(context.l10n.camera),
                       ),
-                      ElevatedButton.icon(
+                      OutlinedButton.icon(
                         onPressed: _pickFromGallery,
                         icon: const Icon(Icons.photo_library),
-                        label: const Text('Galeri'),
+                        label:  Text(context.l10n.gallery),
                       ),
                     ],
                   ),
@@ -122,22 +137,26 @@ class _AddNewPostScreenState extends State<AddNewPostScreen> {
                     minLines: 4,
                     maxLines: 10,
                     decoration: InputDecoration(
-                      labelText: 'Deskripsi',
-                      hintText: 'Masukkan deskripsi',
+                      labelText: context.l10n.description,
                       alignLabelWithHint: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 24),
-
                   CustomButton(
                     isLoading: state.status == GeneralState.loading,
                     onPressed: () => _uploadPost(context),
-                    text: 'Upload',
+                    text: context.l10n.upload,
                     buttonType: ButtonType.primary,
+                  ),
+                  const SizedBox(height: 24),
+                  CustomButton(
+                    isLoading: state.status == GeneralState.loading,
+                    onPressed: () => context.goNamed(AppRoute.home.name),
+                    text: context.l10n.cancel,
+                    buttonType: ButtonType.outline,
                   ),
                 ],
               ),

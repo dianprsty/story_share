@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/constant/general_state.dart';
+import '../../core/extension/build_context_extension.dart';
 import '../../core/route/go_router_config.dart';
 import '../../domain/entities/post/post_entity.dart';
 import '../auth/bloc/auth_bloc.dart';
 import '../shared/bloc/theme/theme_bloc.dart';
 import '../shared/widget/custom_button.dart';
+import '../shared/widget/flag_icon_widget.dart';
 import 'bloc/post_list_bloc.dart';
 import 'widget/post_card.dart';
 
@@ -31,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text('Story Share'),
         actions: [
+          FlagIconWidget(),
           BlocBuilder<ThemeBloc, ThemeState>(
             builder: (context, state) {
               bool isDarkMode = state.themeMode == ThemeMode.dark;
@@ -49,17 +52,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 context: context,
                 builder:
                     (context) => AlertDialog(
-                      title: Text('Logout'),
-                      content: Text('Are you sure you want to logout?'),
+                      title: Text(context.l10n.logout),
+                      content: Text(context.l10n.logoutConfirmation),
                       actions: [
                         TextButton(
-                          child: Text('Cancel'),
+                          child: Text(context.l10n.cancel),
                           onPressed: () {
                             context.pop();
                           },
                         ),
                         TextButton(
-                          child: Text('Logout'),
+                          child: Text(context.l10n.logout),
                           onPressed: () async {
                             context.read<AuthBloc>().add(AuthEvent.logout());
                             await Future.delayed(Duration(milliseconds: 500));
@@ -100,14 +103,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                     separatorBuilder: (context, index) => SizedBox(height: 10),
                   ),
-                  _ => Center(
+                  GeneralState.error => Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      spacing: 16,
                       children: [
                         Text(
                           state.message.isEmpty
-                              ? 'Initial state'
+                              ? 'Stories not found'
                               : state.message,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                         SizedBox(
                           width: 200,
@@ -124,6 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
+                  _ => SizedBox.shrink(),
                 };
               },
             ),
@@ -132,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.pushNamed(AppRoute.addStory.name);
+          context.goNamed(AppRoute.addStory.name);
         },
         backgroundColor: Theme.of(context).colorScheme.primary,
         child: Icon(

@@ -33,4 +33,15 @@ class PostRepositoryImpl implements PostRepository {
 
     return result;
   }
+
+  @override
+  Future<Result<PostEntity>> getPostById(String id) async {
+    final result = await _postRemoteDatasource.getPostById(id);
+
+    if (result is Success) {
+      return Result.success(result.resultValue!.toPostEntity());
+    } else {
+      return Result.failed(result.errorMessage ?? 'Failed to get post details');
+    }
+  }
 }

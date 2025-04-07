@@ -16,7 +16,7 @@ class UploadBloc extends Bloc<UploadEvent, UploadState> {
     on<_Upload>(_uploadPost);
   }
 
-  void _uploadPost(UploadEvent event, emit) async {
+  void _uploadPost(_Upload event, emit) async {
     emit(state.copyWith(status: GeneralState.loading));
 
     var result = await uploadPostUsecase.call(event.data);
