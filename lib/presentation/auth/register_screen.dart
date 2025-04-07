@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+
 import '../../core/extension/build_context_extension.dart';
 import '../shared/widget/flag_icon_widget.dart';
+
 import 'widget/register_form.dart';
 
 class RegisterScreen extends StatelessWidget {

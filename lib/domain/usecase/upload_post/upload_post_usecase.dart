@@ -1,6 +1,7 @@
 import '../../entities/result.dart';
 import '../../repository/post_repository.dart';
 import '../usecase.dart';
+
 import 'upload_post_param.dart';
 
 class UploadPostUsecase implements UseCase<Result<String>, UploadPostParam> {

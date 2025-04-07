@@ -1,6 +1,7 @@
-import '../../repository/authentication_repository.dart';
 import '../../entities/result.dart';
+import '../../repository/authentication_repository.dart';
 import '../usecase.dart';
+
 import 'register_param.dart';
 
 class RegisterUsecase implements UseCase<Result<String>, RegisterParam> {

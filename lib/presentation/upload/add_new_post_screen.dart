@@ -1,9 +1,9 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -13,6 +13,7 @@ import '../../core/route/go_router_config.dart';
 import '../../domain/usecase/upload_post/upload_post_param.dart';
 import '../home/bloc/post_list_bloc.dart';
 import '../shared/widget/custom_button.dart';
+
 import 'bloc/upload_bloc.dart';
 
 class AddNewPostScreen extends StatefulWidget {

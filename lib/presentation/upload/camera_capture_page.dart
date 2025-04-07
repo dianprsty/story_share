@@ -1,8 +1,9 @@
 import 'dart:io';
 
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:camera/camera.dart';
 import 'package:go_router/go_router.dart';
 
 class CameraCapturePage extends StatefulWidget {
@@ -53,7 +54,14 @@ class _CameraCapturePageState extends State<CameraCapturePage> {
       ResolutionPreset.high,
       imageFormatGroup: ImageFormatGroup.jpeg,
     );
-    await _controller?.initialize();
+
+    try {
+      await _controller?.initialize();
+    } catch (e) {
+      return;
+    }
+
+  
     if (mounted) {
       setState(() {
         _isLoading = false;
@@ -70,12 +78,12 @@ class _CameraCapturePageState extends State<CameraCapturePage> {
   }
 
   void _captureImage() async {
-  if (_controller == null || !_controller!.value.isInitialized) return;
-  final picture = await _controller!.takePicture();
-  if (!mounted) return;
+    if (_controller == null || !_controller!.value.isInitialized) return;
+    final picture = await _controller!.takePicture();
+    if (!mounted) return;
 
-  context.pop(File(picture.path)); 
-}
+    context.pop(File(picture.path));
+  }
 
   @override
   void dispose() {
@@ -87,35 +95,36 @@ class _CameraCapturePageState extends State<CameraCapturePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Stack(
-              fit: StackFit.expand,
-              children: [
-                AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: CameraPreview(_controller!),
-                ),
-                Positioned(
-                  bottom: 20,
-                  left: 20,
-                  child: FloatingActionButton(
-                    heroTag: 'switch',
-                    onPressed: _switchCamera,
-                    child: const Icon(Icons.switch_camera),
+      body:
+          _isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : Stack(
+                fit: StackFit.expand,
+                children: [
+                  AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: CameraPreview(_controller!),
                   ),
-                ),
-                Positioned(
-                  bottom: 20,
-                  right: 20,
-                  child: FloatingActionButton(
-                    heroTag: 'capture',
-                    onPressed: _captureImage,
-                    child: const Icon(Icons.camera),
+                  Positioned(
+                    bottom: 20,
+                    left: 20,
+                    child: FloatingActionButton(
+                      heroTag: 'switch',
+                      onPressed: _switchCamera,
+                      child: const Icon(Icons.switch_camera),
+                    ),
                   ),
-                ),
-              ],
-            ),
+                  Positioned(
+                    bottom: 20,
+                    right: 20,
+                    child: FloatingActionButton(
+                      heroTag: 'capture',
+                      onPressed: _captureImage,
+                      child: const Icon(Icons.camera),
+                    ),
+                  ),
+                ],
+              ),
     );
   }
 }

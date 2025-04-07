@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../core/constant/general_state.dart';
+import '../../core/extension/build_context_extension.dart';
 import '../../core/utils/date_utils.dart';
 import '../../domain/entities/post/post_entity.dart';
 import '../shared/widget/custom_button.dart';
+
 import 'bloc/detail_bloc.dart';
 
 class PostDetailScreen extends StatefulWidget {
@@ -54,7 +58,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
           }
 
           if (state.status == GeneralState.success && state.post == null) {
-            return const Center(child: Text('Post not found'));
+            return Center(child: Text(context.l10n.storyNotFound));
           }
 
           if (state.status == GeneralState.success && state.post != null) {

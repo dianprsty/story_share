@@ -1,9 +1,9 @@
-import '../../domain/entities/user/user_entity.dart';
-import '../model/login_response/login_response.dart';
 import '../../domain/entities/result.dart';
+import '../../domain/entities/user/user_entity.dart';
 import '../../domain/repository/authentication_repository.dart';
 import '../datasource/local/authentication_local_datasource.dart';
 import '../datasource/remote/authentication_remote_datasource.dart';
+import '../model/login_response/login_response.dart';
 
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
   final AuthenticationRemoteDatasource _authenticationRemoteDatasource;

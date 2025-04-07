@@ -1,5 +1,5 @@
-import '../../repository/authentication_repository.dart';
 import '../../entities/result.dart';
+import '../../repository/authentication_repository.dart';
 import '../usecase.dart';
 
 class LogoutUsecase implements UseCase<void, void> {

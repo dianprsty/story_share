@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,6 +11,7 @@ import '../auth/bloc/auth_bloc.dart';
 import '../shared/bloc/theme/theme_bloc.dart';
 import '../shared/widget/custom_button.dart';
 import '../shared/widget/flag_icon_widget.dart';
+
 import 'bloc/post_list_bloc.dart';
 import 'widget/post_card.dart';
 
@@ -92,17 +94,21 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (context, state) {
                 return switch (state.status) {
                   GeneralState.loading => const CircularProgressIndicator(),
-                  GeneralState.success => ListView.separated(
-                    itemCount: state.posts.length,
-                    itemBuilder: (context, index) {
-                      PostEntity post = state.posts[index];
-                      return Container(
-                        padding: const EdgeInsets.all(8.0),
-                        child: PostCard(post: post),
-                      );
-                    },
-                    separatorBuilder: (context, index) => SizedBox(height: 10),
-                  ),
+                  GeneralState.success =>
+                    state.posts.isEmpty
+                        ? Center(child: Text(context.l10n.emptyStories))
+                        : ListView.separated(
+                          itemCount: state.posts.length,
+                          itemBuilder: (context, index) {
+                            PostEntity post = state.posts[index];
+                            return Container(
+                              padding: const EdgeInsets.all(8.0),
+                              child: PostCard(post: post),
+                            );
+                          },
+                          separatorBuilder:
+                              (context, index) => SizedBox(height: 10),
+                        ),
                   GeneralState.error => Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,

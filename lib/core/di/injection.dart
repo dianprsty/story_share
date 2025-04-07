@@ -33,23 +33,18 @@ import '../service/theme_service.dart';
 final getIt = GetIt.instance;
 
 Future<void> setup() async {
-  // ---------------- Core / Third Party ----------------
   final sharedPreferences = await SharedPreferences.getInstance();
   getIt.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
-
   getIt.registerLazySingleton<ApiService>(() => ApiService());
   getIt.registerLazySingleton<ThemeService>(() => ThemeService(getIt()));
   getIt.registerLazySingleton<GoRouter>(() => GoRouterConfig.router(getIt()));
 
-  // ---------------- Data Source ----------------
   getIt.registerLazySingleton<AuthenticationRemoteDatasource>(
     () => AuthenticationRemoteDatasourceImpl(apiService: getIt()),
   );
-
   getIt.registerLazySingleton<AuthenticationLocalDatasource>(
     () => AuthenticationLocalDatasourceImpl(sharedPreferences: getIt()),
   );
-
   getIt.registerLazySingleton<PostRemoteDatasource>(
     () => PostRemoteDatasourceImpl(
       apiService: getIt(),
@@ -60,7 +55,6 @@ Future<void> setup() async {
     () => LocalizationLocalDataSourceImpl(sharedPreferences: getIt()),
   );
 
-  // ---------------- Repository ----------------
   getIt.registerLazySingleton<AuthenticationRepository>(
     () => AuthenticationRepositoryImpl(
       authenticationRemoteDatasource: getIt(),
@@ -76,7 +70,6 @@ Future<void> setup() async {
     () => LocalizationRepositoryImpl(localizationLocalDataSource: getIt()),
   );
 
-  // ---------------- Usecase ----------------
   getIt.registerLazySingleton(
     () => RegisterUsecase(authenticationRepository: getIt()),
   );
@@ -98,12 +91,10 @@ Future<void> setup() async {
     () => GetPostByIdUsecase(postRepository: getIt()),
   );
 
-  // ---------------- Bloc ----------------
   getIt.registerFactory(() => ThemeBloc(getIt()));
   getIt.registerFactory(
     () => L10nBloc(getLanguageUsecase: getIt(), changeLanguageUsecase: getIt()),
   );
-
   getIt.registerFactory(
     () => AuthBloc(
       registerUsecase: getIt(),
@@ -111,7 +102,6 @@ Future<void> setup() async {
       logoutUsecase: getIt(),
     ),
   );
-
   getIt.registerFactory(() => PostListBloc(getPostsUsecase: getIt()));
   getIt.registerFactory(() => UploadBloc(uploadPostUsecase: getIt()));
   getIt.registerFactory(() => DetailBloc(getPostByIdUsecase: getIt()));

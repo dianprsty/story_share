@@ -32,5 +32,8 @@
   "justNow": "Just now",
   "minutesAgo": "{time, plural, one {{time} minute ago} other {{time} minutes ago}}",
   "hoursAgo": "{time, plural, one {{time} hour ago} other {{time} hours ago}}",
-  "daysAgo": "{time, plural, one {{time} day ago} other {{time} days ago}}"
+  "daysAgo": "{time, plural, one {{time} day ago} other {{time} days ago}}",
+  "emptyStories": "No stories yet",
+  "storyNotFound": "Story not found"
+
 }

@@ -1,7 +1,8 @@
+import '../../entities/result.dart';
 import '../../entities/user/user_entity.dart';
 import '../../repository/authentication_repository.dart';
-import '../../entities/result.dart';
 import '../usecase.dart';
+
 import 'login_param.dart';
 
 class LoginUsecase implements UseCase<Result<UserEntity>, LoginParam> {
