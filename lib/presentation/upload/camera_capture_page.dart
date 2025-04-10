@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:camera/camera.dart';
 import 'package:go_router/go_router.dart';
 
+import '../shared/widget/wavy_loading_indicator.dart';
+
 class CameraCapturePage extends StatefulWidget {
   const CameraCapturePage({super.key});
 
@@ -97,7 +99,7 @@ class _CameraCapturePageState extends State<CameraCapturePage> {
     return Scaffold(
       body:
           _isLoading
-              ? const Center(child: CircularProgressIndicator())
+              ? const Center(child: WavyLoadingIndicator())
               : Stack(
                 fit: StackFit.expand,
                 children: [

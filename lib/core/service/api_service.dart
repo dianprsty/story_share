@@ -35,10 +35,11 @@ class ApiService {
   Future<Response> fetchDataWithToken({
     required String url,
     required String token,
+    Map<String, dynamic>? queryParameters,
   }) async {
     try {
       _dio.options.headers['Authorization'] = 'Bearer $token';
-      final response = await _dio.get(url);
+      final response = await _dio.get(url, queryParameters: queryParameters);
       return response;
     } catch (e) {
       throw Exception('Failed to fetch data');

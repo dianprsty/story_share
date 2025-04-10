@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'wavy_loading_indicator.dart';
+
 enum ButtonType { primary, outline }
 
 class CustomButton extends StatelessWidget {
@@ -36,7 +38,7 @@ class CustomButton extends StatelessWidget {
                 onPressed: isDisabled || isLoading ? null : onPressed,
                 child:
                     isLoading
-                        ? const CircularProgressIndicator()
+                        ? const WavyLoadingIndicator()
                         : Text(
                           text,
                           style: TextStyle(
@@ -55,7 +57,7 @@ class CustomButton extends StatelessWidget {
                 onPressed: isDisabled || isLoading ? null : onPressed,
                 child:
                     isLoading
-                        ? const CircularProgressIndicator()
+                        ? const WavyLoadingIndicator()
                         : Text(text, style: TextStyle(fontSize: 16)),
               ),
     );

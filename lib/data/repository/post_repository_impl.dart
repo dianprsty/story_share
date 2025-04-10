@@ -1,4 +1,5 @@
 import '../../domain/entities/post/post_entity.dart';
+import '../../domain/entities/query_param/query_param.dart';
 import '../../domain/entities/result.dart';
 import '../../domain/repository/post_repository.dart';
 import '../../domain/usecase/upload_post/upload_post_param.dart';
@@ -13,8 +14,8 @@ class PostRepositoryImpl implements PostRepository {
     : _postRemoteDatasource = postRemoteDatasource;
 
   @override
-  Future<Result<List<PostEntity>>> getPosts() async {
-    final result = await _postRemoteDatasource.getPosts();
+  Future<Result<List<PostEntity>>> getPosts(QueryParam queryParams) async {
+    final result = await _postRemoteDatasource.getPosts(queryParams.toJson());
 
     if (result is Success) {
       return Result.success(

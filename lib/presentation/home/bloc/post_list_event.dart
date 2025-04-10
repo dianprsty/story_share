@@ -1,6 +1,6 @@
 part of 'post_list_bloc.dart';
 
 @freezed
-class PostListEvent with _$PostListEvent {
-  const factory PostListEvent.getPosts() = _GetPosts;
+abstract class PostListEvent with _$PostListEvent {
+  const factory PostListEvent.getPosts(QueryParam queryParams) = _GetPosts;
 }

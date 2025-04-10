@@ -8,6 +8,7 @@ import '../../core/extension/build_context_extension.dart';
 import '../../core/utils/date_utils.dart';
 import '../../domain/entities/post/post_entity.dart';
 import '../shared/widget/custom_button.dart';
+import '../shared/widget/wavy_loading_indicator.dart';
 
 import 'bloc/detail_bloc.dart';
 
@@ -33,7 +34,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
       body: BlocBuilder<DetailBloc, DetailState>(
         builder: (context, state) {
           if (state.status == GeneralState.loading) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: WavyLoadingIndicator());
           }
 
           if (state.status == GeneralState.error) {

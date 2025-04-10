@@ -10,9 +10,11 @@ import 'package:image_picker/image_picker.dart';
 import '../../core/constant/general_state.dart';
 import '../../core/extension/build_context_extension.dart';
 import '../../core/route/go_router_config.dart';
+import '../../domain/entities/query_param/query_param.dart';
 import '../../domain/usecase/upload_post/upload_post_param.dart';
 import '../home/bloc/post_list_bloc.dart';
 import '../shared/widget/custom_button.dart';
+import '../shared/widget/wavy_loading_indicator.dart';
 
 import 'bloc/upload_bloc.dart';
 
@@ -37,10 +39,7 @@ class _AddNewPostScreenState extends State<AddNewPostScreen> {
 
   Future<void> _uploadPost(BuildContext context) async {
     if (_selectedImage == null || _descriptionController.text.isEmpty) {
-      context.showSnackBar(
-        context.l10n.uploadValidation,
-        success: false,
-      );
+      context.showSnackBar(context.l10n.uploadValidation, success: false);
       return;
     }
 
@@ -67,7 +66,9 @@ class _AddNewPostScreenState extends State<AddNewPostScreen> {
       body: BlocConsumer<UploadBloc, UploadState>(
         listener: (context, state) {
           if (state.status == GeneralState.success) {
-            context.read<PostListBloc>().add(PostListEvent.getPosts());
+            context.read<PostListBloc>().add(
+              PostListEvent.getPosts(QueryParam()),
+            );
             context.goNamed(AppRoute.home.name);
             context.showSnackBar(context.l10n.uploadSuccess);
           }
@@ -82,18 +83,22 @@ class _AddNewPostScreenState extends State<AddNewPostScreen> {
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
+                  
                   if (_selectedImage != null)
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12),
-                      child: kIsWeb ? Image.network(
-                        _selectedImage!.path,
-                        height: 200,
-                        fit: BoxFit.cover,
-                      ): Image.file(
-                        _selectedImage!,
-                        height: 200,
-                        fit: BoxFit.cover,
-                      ),
+                      child:
+                          kIsWeb
+                              ? Image.network(
+                                _selectedImage!.path,
+                                height: 200,
+                                fit: BoxFit.cover,
+                              )
+                              : Image.file(
+                                _selectedImage!,
+                                height: 200,
+                                fit: BoxFit.cover,
+                              ),
                     )
                   else
                     Container(
@@ -123,7 +128,7 @@ class _AddNewPostScreenState extends State<AddNewPostScreen> {
                       OutlinedButton.icon(
                         onPressed: _pickFromGallery,
                         icon: const Icon(Icons.photo_library),
-                        label:  Text(context.l10n.gallery),
+                        label: Text(context.l10n.gallery),
                       ),
                     ],
                   ),
@@ -154,7 +159,7 @@ class _AddNewPostScreenState extends State<AddNewPostScreen> {
                   ),
                   const SizedBox(height: 24),
                   CustomButton(
-                    isLoading: state.status == GeneralState.loading,
+                    isDisabled: state.status == GeneralState.loading,
                     onPressed: () => context.goNamed(AppRoute.home.name),
                     text: context.l10n.cancel,
                     buttonType: ButtonType.outline,

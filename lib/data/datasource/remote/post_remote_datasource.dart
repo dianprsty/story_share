@@ -8,7 +8,7 @@ import '../../model/post/post_model.dart';
 import '../../model/post/upload_request_model.dart';
 
 abstract interface class PostRemoteDatasource {
-  Future<Result<List<PostModel>>> getPosts();
+  Future<Result<List<PostModel>>> getPosts(Map<String, dynamic> queryParams);
   Future<Result<String>> uploadPost(UploadRequestModel data);
   Future<Result<PostModel>> getPostById(String id);
 }
@@ -24,14 +24,15 @@ class PostRemoteDatasourceImpl implements PostRemoteDatasource {
        _sharedPreferences = sharedPreferences;
 
   @override
-  Future<Result<List<PostModel>>> getPosts() async {
+  Future<Result<List<PostModel>>> getPosts(Map<String, dynamic> queryParams) async {
     try {
       String token = _sharedPreferences.getString(tokenKey) ?? '';
       if (token.isEmpty) return Result.failed('Unauthorized');
 
       final response = await _apiService.fetchDataWithToken(
-        url: '/stories?size=100&page=1',
+        url: '/stories',
         token: token,
+        queryParameters: queryParams,
       );
 
       if (response.statusCode == 200) {
