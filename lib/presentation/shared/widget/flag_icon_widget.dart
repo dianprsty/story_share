@@ -12,7 +12,7 @@ class FlagIconWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.only(right: 8),
       child: BlocBuilder<L10nBloc, L10nState>(
         builder: (context, state) {
           return DropdownButtonHideUnderline(

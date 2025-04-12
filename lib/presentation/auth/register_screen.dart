@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/extension/build_context_extension.dart';
+import '../shared/widget/app_logo.dart';
 import '../shared/widget/flag_icon_widget.dart';
 
 import 'widget/register_form.dart';
@@ -21,6 +22,8 @@ class RegisterScreen extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  AppLogo(size: 150),
+                  SizedBox(height: 32),
                   Text(
                     context.l10n.registerTitle,
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),

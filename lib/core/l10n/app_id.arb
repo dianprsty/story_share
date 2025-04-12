@@ -155,5 +155,29 @@
   "seeOnMap": "Lihat di Peta",
   "@seeOnMap": {
     "description": "Text untuk tombol lihat di peta"
+  },
+  "permissionDenied": "Izin akses okasi ditolak",
+  "@permissionDenied": {
+    "description": "Text informasi izin ditolak"
+  },
+  "failedToGetLocation": "Gagal mendapatkan lokasi",
+  "@failedToGetLocation": {
+    "description": "Text informasi gagal mendapatkan lokasi"
+  },
+  "failedToGetLocationInfo": "Gagal mendapatkan info lokasi",
+  "@failedToGetLocationInfo": {
+    "description": "Text informasi gagal mendapatkan info lokasi"
+  },
+  "noMoreStories": "Semua cerita telah ditampilkan",
+  "@noMoreStories": {
+    "description": "Text informasi tidak ada cerita lagi"
+  },
+  "storiesNotFound": "Cerita tidak ditemukan",
+  "@storiesNotFound": {
+    "description": "Text informasi cerita tidak ditemukan"
+  },
+  "retry": "Coba lagi",
+  "@retry": {
+    "description": "Text untuk tombol coba lagi"
   }
 }

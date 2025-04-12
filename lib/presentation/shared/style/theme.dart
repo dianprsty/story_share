@@ -7,12 +7,9 @@ import '../../../core/config/flavor_config.dart';
 import 'colors.dart';
 
 class StoryShareTheme {
-  static ThemeData lightTheme({FlavorType? flavor = FlavorType.free}) {
+  static ThemeData lightTheme({Color? color = Colors.cyanAccent}) {
     return ThemeData(
-      colorSchemeSeed:
-          flavor == FlavorType.free
-              ? CustomColors.tosca.color
-              : CustomColors.purple.color,
+      colorSchemeSeed: color,
       brightness: Brightness.light,
       textTheme: GoogleFonts.poppinsTextTheme(Typography.blackHelsinki),
       useMaterial3: true,

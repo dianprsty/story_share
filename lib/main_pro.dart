@@ -19,8 +19,8 @@ void main() async {
 
   FlavorConfig(
     flavor: FlavorType.pro,
-    color: CustomColors.tosca.color,
-    values: const FlavorValues(titleApp: 'Story Share PRO'),
+    color: CustomColors.purple.color,
+    values: const FlavorValues(titleApp: 'Story Share Pro'),
   );
   runApp(
     MultiBlocProvider(

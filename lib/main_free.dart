@@ -19,7 +19,7 @@ void main() async {
 
   FlavorConfig(
     flavor: FlavorType.free,
-    color: CustomColors.purple.color,
+    color: CustomColors.tosca.color,
     values: const FlavorValues(titleApp: 'Story Share'),
   );
   runApp(

@@ -35,5 +35,11 @@
   "daysAgo": "{time, plural, one {{time} day ago} other {{time} days ago}}",
   "emptyStories": "No stories yet",
   "storyNotFound": "Story not found",
-  "seeOnMap": "See on Map"
+  "seeOnMap": "See on Map",
+  "permissionDenied": "Location permission denied",
+  "failedToGetLocation": "Failed to get location",
+  "failedToGetLocationInfo": "Failed to get location info",
+  "noMoreStories": "All stories have been displayed",
+  "storiesNotFound": "Stories not found",
+  "retry": "Retry"
 }

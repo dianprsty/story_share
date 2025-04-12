@@ -20,7 +20,7 @@ val mapsApiKey = localProperties["GOOGLE_MAPS_API_KEY"] as String
 android {
     namespace = "com.example.story_share_dicoding"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = "27.0.12077973"
+    ndkVersion = flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

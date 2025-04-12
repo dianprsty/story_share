@@ -18,7 +18,7 @@ class StoryShare extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: FlavorConfig.instance.values.titleApp,
-      theme: StoryShareTheme.lightTheme(flavor: FlavorConfig.instance.flavor),
+      theme: StoryShareTheme.lightTheme(color: FlavorConfig.instance.color),
       darkTheme: StoryShareTheme.darkTheme(
         flavor: FlavorConfig.instance.flavor,
       ),

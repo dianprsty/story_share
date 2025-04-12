@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/config/flavor_config.dart';
 import '../../core/config/go_router_config.dart';
@@ -11,6 +12,7 @@ import '../../domain/entities/post/post_entity.dart';
 import '../../domain/entities/query_param/query_param.dart';
 import '../auth/bloc/auth_bloc.dart';
 import '../shared/bloc/theme/theme_bloc.dart';
+import '../shared/widget/app_logo.dart';
 import '../shared/widget/custom_button.dart';
 import '../shared/widget/flag_icon_widget.dart';
 import '../shared/widget/wavy_loading_indicator.dart';
@@ -47,7 +49,6 @@ class _HomeScreenState extends State<HomeScreen> {
         scrollController.position.maxScrollExtent) {
       final postListState = context.read<PostListBloc>().state;
       if (postListState.status.isLoading) return;
-      print('ruuun');
       final queryParam = postListState.queryParams;
       bool isMaxPage = postListState.isMaxPage;
       int incrementPage = isMaxPage ? 0 : 1;
@@ -63,7 +64,24 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(FlavorConfig.instance.values.titleApp),
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          spacing: 8,
+          children: [
+            AppLogo(size: 32),
+            Expanded(
+              child: Text(
+                FlavorConfig.instance.values.titleApp,
+                style: GoogleFonts.kurale(
+                  textStyle: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
         actions: [
           FlagIconWidget(),
           BlocBuilder<ThemeBloc, ThemeState>(
@@ -129,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
 
                 if (state.status == GeneralState.success && state.isMaxPage) {
-                  context.showSnackBar('No more data');
+                  context.showSnackBar(context.l10n.noMoreStories);
                 }
               },
               builder: (context, state) {
@@ -169,14 +187,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Text(
                           state.message.isEmpty
-                              ? 'Stories not found'
+                              ? context.l10n.storyNotFound
                               : state.message,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         SizedBox(
                           width: 200,
                           child: CustomButton(
-                            text: 'Retry',
+                            text: context.l10n.retry,
                             onPressed: () {
                               context.read<PostListBloc>().add(
                                 PostListEvent.getPosts(QueryParam()),

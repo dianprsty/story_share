@@ -7,9 +7,9 @@ import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
+import '../../core/config/go_router_config.dart';
 import '../../core/di/injection.dart';
 import '../../core/extension/build_context_extension.dart';
-import '../../core/config/go_router_config.dart';
 import '../../core/service/map_service.dart';
 
 import 'widget/placemark_widget.dart';
@@ -45,27 +45,6 @@ class _MapsDetailScreenState extends State<MapsDetailScreen> {
   void dispose() {
     mapController.dispose();
     super.dispose();
-  }
-
-  Future<void> setInitialLocation(BuildContext context) async {
-    try {
-      bool isPermission = await getIt<MapService>().checkPermission(context);
-      if (isPermission) {
-        LocationData locationData = await getIt<MapService>().getMyLocation();
-        final latLng = LatLng(locationData.latitude!, locationData.longitude!);
-        point = latLng;
-      } else {
-        if (context.mounted) {
-          context.showSnackBar('Location permission is denied');
-          point = LatLng(-6.175389, 106.827139);
-        }
-      }
-    } catch (e) {
-      if (context.mounted) {
-        context.showSnackBar('Failed to get location');
-        point = LatLng(-6.175389, 106.827139);
-      }
-    }
   }
 
   @override
@@ -241,6 +220,27 @@ class _MapsDetailScreenState extends State<MapsDetailScreen> {
     );
   }
 
+  Future<void> setInitialLocation(BuildContext context) async {
+    try {
+      bool isPermission = await getIt<MapService>().checkPermission(context);
+      if (isPermission) {
+        LocationData locationData = await getIt<MapService>().getMyLocation();
+        final latLng = LatLng(locationData.latitude!, locationData.longitude!);
+        point = latLng;
+      } else {
+        if (context.mounted) {
+          context.showSnackBar(context.l10n.permissionDenied, success: false);
+          point = LatLng(-6.175389, 106.827139);
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
+        context.showSnackBar(context.l10n.failedToGetLocation, success: false);
+        point = LatLng(-6.175389, 106.827139);
+      }
+    }
+  }
+
   void defineMarker({
     required LatLng latLng,
     String? street = '',
@@ -250,6 +250,9 @@ class _MapsDetailScreenState extends State<MapsDetailScreen> {
       markerId: MarkerId(widget.id ?? 'marker'),
       position: latLng,
       infoWindow: InfoWindow(title: street, snippet: address),
+      onTap: () {
+        mapController.animateCamera(CameraUpdate.newLatLngZoom(latLng, 18));
+      },
     );
     setState(() {
       markers.clear();
@@ -261,6 +264,9 @@ class _MapsDetailScreenState extends State<MapsDetailScreen> {
     try {
       bool isPermitted = await getIt<MapService>().checkPermission(context);
       if (!isPermitted) {
+        if (context.mounted) {
+          context.showSnackBar(context.l10n.permissionDenied, success: false);
+        }
         return;
       }
 
@@ -284,7 +290,7 @@ class _MapsDetailScreenState extends State<MapsDetailScreen> {
         setState(() {
           placemark = null;
         });
-        context.showSnackBar('Error getting location');
+        context.showSnackBar(context.l10n.failedToGetLocation, success: false);
       }
     }
   }
@@ -309,7 +315,10 @@ class _MapsDetailScreenState extends State<MapsDetailScreen> {
         placemark = null;
         point = latLng;
       });
-      context.showSnackBar('Failed to get location info $e');
+      context.showSnackBar(
+        context.l10n.failedToGetLocationInfo,
+        success: false,
+      );
     }
   }
 
@@ -334,7 +343,10 @@ class _MapsDetailScreenState extends State<MapsDetailScreen> {
     } catch (e) {
       if (context.mounted) {
         defineMarker(latLng: point);
-        context.showSnackBar('Failed to get location info');
+        context.showSnackBar(
+          context.l10n.failedToGetLocationInfo,
+          success: false,
+        );
       }
     }
   }
