@@ -39,7 +39,7 @@ class PlacemarkWidget extends StatelessWidget {
                     placemark.locality,
                     placemark.postalCode,
                     placemark.country,
-                  ].where((e) => e != null).join(', '),
+                  ].where((e) => e != null && e.isNotEmpty).toList().join(', '),
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
               ],

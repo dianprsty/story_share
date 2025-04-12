@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 enum CustomColors {
-  red('Red', Colors.cyanAccent);
+  tosca('tosca', Colors.cyanAccent),
+  purple('purple', Colors.purple);
 
   const CustomColors(this.name, this.color);
 

@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/constant/general_state.dart';
 import '../../../core/extension/build_context_extension.dart';
-import '../../../core/route/go_router_config.dart';
+import '../../../core/config/go_router_config.dart';
 import '../../../domain/usecase/register/register_param.dart';
 import '../../shared/widget/custom_button.dart';
 import '../../shared/widget/custom_text_field.dart';
@@ -36,7 +36,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
         ),
       );
-    } 
+    }
   }
 
   @override

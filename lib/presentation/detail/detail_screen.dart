@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/constant/general_state.dart';
 import '../../core/extension/build_context_extension.dart';
-import '../../core/route/go_router_config.dart';
+import '../../core/config/go_router_config.dart';
 import '../../core/utils/date_utils.dart';
 import '../../domain/entities/post/post_entity.dart';
 import '../shared/widget/custom_button.dart';

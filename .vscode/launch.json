@@ -1,25 +1,53 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "story_share_dicoding",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "story_share_dicoding (profile mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "story_share_dicoding (release mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        }
-    ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Free (debug)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "program": "lib/main_free.dart",
+      "args": ["--flavor", "free"]
+    },
+    {
+      "name": "Free (profile)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile",
+      "program": "lib/main_free.dart",
+      "args": ["--flavor", "free"]
+    },
+    {
+      "name": "Free (release)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release",
+      "program": "lib/main_free.dart",
+      "args": ["--flavor", "free"]
+    },
+    {
+      "name": "Pro (debug)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "program": "lib/main_pro.dart",
+      "args": ["--flavor", "pro"]
+    },
+    {
+      "name": "Pro (profile)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile",
+      "program": "lib/main_pro.dart",
+      "args": ["--flavor", "pro"]
+    },
+    {
+      "name": "Pro (release)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release",
+      "program": "lib/main_pro.dart",
+      "args": ["--flavor", "pro"]
+    }
+  ]
 }

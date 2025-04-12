@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
@@ -10,7 +9,7 @@ import 'package:location/location.dart';
 
 import '../../core/di/injection.dart';
 import '../../core/extension/build_context_extension.dart';
-import '../../core/route/go_router_config.dart';
+import '../../core/config/go_router_config.dart';
 import '../../core/service/map_service.dart';
 
 import 'widget/placemark_widget.dart';
@@ -48,7 +47,7 @@ class _MapsDetailScreenState extends State<MapsDetailScreen> {
     super.dispose();
   }
 
-  Future<void> initialLocation(BuildContext context) async {
+  Future<void> setInitialLocation(BuildContext context) async {
     try {
       bool isPermission = await getIt<MapService>().checkPermission(context);
       if (isPermission) {
@@ -74,7 +73,7 @@ class _MapsDetailScreenState extends State<MapsDetailScreen> {
     super.initState();
     setState(() {
       if (widget.isFromPost!) {
-        initialLocation(context);
+        setInitialLocation(context);
       } else {
         point = LatLng(double.parse(widget.lat!), double.parse(widget.lng!));
       }
@@ -207,11 +206,13 @@ class _MapsDetailScreenState extends State<MapsDetailScreen> {
                           context.pop((
                             point,
                             [
-                              placemark!.subLocality,
-                              placemark!.locality,
-                              placemark!.postalCode,
-                              placemark!.country,
-                            ].where((e) => e != null).join(', '),
+                                  placemark!.subLocality,
+                                  placemark!.locality,
+                                  placemark!.postalCode,
+                                  placemark!.country,
+                                ]
+                                .where((e) => e != null && e.isNotEmpty)
+                                .join(', '),
                           ));
                         },
                         label: Text('Choose Location'),

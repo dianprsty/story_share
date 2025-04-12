@@ -6,7 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../core/route/go_router_config.dart';
+import '../../../core/config/go_router_config.dart';
 import '../../../core/utils/date_utils.dart';
 import '../../../domain/entities/post/post_entity.dart';
 
@@ -17,21 +17,21 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap:
-          () => context.pushNamed(
-            AppRoute.detailStory.name,
-            pathParameters: {'id': post.id ?? ''},
-          ),
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-        color: Theme.of(context).cardColor,
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+      color: Theme.of(context).cardColor,
 
-        elevation: 0,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
+      elevation: 0,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          GestureDetector(
+            onTap:
+                () => context.pushNamed(
+                  AppRoute.detailStory.name,
+                  pathParameters: {'id': post.id ?? ''},
+                ),
+            child: ClipRRect(
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(8),
                 bottom: Radius.circular(8),
@@ -60,17 +60,19 @@ class PostCard extends StatelessWidget {
                     ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      'https://picsum.photos/50/50?random=${Random().nextInt(100)}',
-                    ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              spacing: 16,
+              children: [
+                CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    'https://picsum.photos/50/50?random=${Random().nextInt(100)}',
                   ),
-                  SizedBox(width: 10),
-                  Column(
+                ),
+                Expanded(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -83,19 +85,27 @@ class PostCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+                if (post.lat != null && post.lon != null)
+                  Tooltip(
+                    message: 'Location Available',
+                    child: Icon(
+                      Icons.location_on_outlined,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
-              child: Text(
-                post.description ?? '-',
-                style: TextStyle(fontSize: 14, overflow: TextOverflow.ellipsis),
-                maxLines: 3,
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
+            child: Text(
+              post.description ?? '-',
+              style: TextStyle(fontSize: 14, overflow: TextOverflow.ellipsis),
+              maxLines: 3,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

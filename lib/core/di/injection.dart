@@ -27,7 +27,7 @@ import '../../presentation/home/bloc/post_list_bloc.dart';
 import '../../presentation/shared/bloc/l10n/l10n_bloc.dart';
 import '../../presentation/shared/bloc/theme/theme_bloc.dart';
 import '../../presentation/upload/bloc/upload_bloc.dart';
-import '../route/go_router_config.dart';
+import '../config/go_router_config.dart';
 import '../service/api_service.dart';
 import '../service/map_service.dart';
 import '../service/theme_service.dart';

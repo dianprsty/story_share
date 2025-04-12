@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/config/flavor_config.dart';
+import '../../core/config/go_router_config.dart';
 import '../../core/constant/general_state.dart';
 import '../../core/extension/build_context_extension.dart';
-import '../../core/route/go_router_config.dart';
 import '../../domain/entities/post/post_entity.dart';
 import '../../domain/entities/query_param/query_param.dart';
 import '../auth/bloc/auth_bloc.dart';
@@ -62,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Story Share'),
+        title: Text(FlavorConfig.instance.values.titleApp),
         actions: [
           FlagIconWidget(),
           BlocBuilder<ThemeBloc, ThemeState>(
@@ -199,23 +200,24 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.end,
         spacing: 8,
         children: [
-          FloatingActionButton(
-            shape: CircleBorder(),
-            mini: true,
-            onPressed: () {
-              scrollController.animateTo(
-                0,
-                duration: Durations.long1,
-                curve: Curves.easeInOut,
-              );
-            },
-            heroTag: 'scrollToTop',
-            backgroundColor: Theme.of(context).colorScheme.secondary,
-            child: Icon(
-              Icons.arrow_upward,
-              color: Theme.of(context).colorScheme.onSecondary,
+          if (context.watch<PostListBloc>().state.posts.length > 10)
+            FloatingActionButton(
+              shape: CircleBorder(),
+              mini: true,
+              onPressed: () {
+                scrollController.animateTo(
+                  0,
+                  duration: Durations.long1,
+                  curve: Curves.easeInOut,
+                );
+              },
+              heroTag: 'scrollToTop',
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              child: Icon(
+                Icons.arrow_upward,
+                color: Theme.of(context).colorScheme.onSecondary,
+              ),
             ),
-          ),
           FloatingActionButton(
             onPressed: () {
               context.goNamed(AppRoute.addStory.name);

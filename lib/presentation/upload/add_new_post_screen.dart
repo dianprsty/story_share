@@ -8,9 +8,10 @@ import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../core/config/flavor_config.dart';
+import '../../core/config/go_router_config.dart';
 import '../../core/constant/general_state.dart';
 import '../../core/extension/build_context_extension.dart';
-import '../../core/route/go_router_config.dart';
 import '../../domain/entities/query_param/query_param.dart';
 import '../../domain/usecase/upload_post/upload_post_param.dart';
 import '../home/bloc/post_list_bloc.dart';
@@ -140,29 +141,34 @@ class _AddNewPostScreenState extends State<AddNewPostScreen> {
                       ),
                     ],
                   ),
-                  CustomButton(
-                    text: 'pilih lokasi',
-                    visualDensity: VisualDensity.compact,
-                    leadingIcon: Icon(Icons.map_outlined),
-                    onPressed: () async {
-                      var result = await context.pushNamed(
-                        AppRoute.mapDetail.name,
-                        extra: true,
-                      );
-
-                      if (result != null) {
-                        var (latLng, info) = result as (LatLng, String);
-                        setState(() {
-                          _selectedLocation = latLng;
-                          _locationInfo = info;
-                        });
-                      }
-                    },
-                    buttonType: ButtonType.outline,
-                  ),
-
                   if (_selectedLocation != null)
-                    Text(_locationInfo ?? _selectedLocation.toString()),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Text(
+                        _locationInfo ?? _selectedLocation.toString(),
+                      ),
+                    ),
+                  if (FlavorConfig.instance.flavor == FlavorType.pro)
+                    CustomButton(
+                      text: 'pilih lokasi',
+                      visualDensity: VisualDensity.compact,
+                      leadingIcon: Icon(Icons.map_outlined),
+                      onPressed: () async {
+                        var result = await context.pushNamed(
+                          AppRoute.mapDetail.name,
+                          extra: true,
+                        );
+
+                        if (result != null) {
+                          var (latLng, info) = result as (LatLng, String);
+                          setState(() {
+                            _selectedLocation = latLng;
+                            _locationInfo = info;
+                          });
+                        }
+                      },
+                      buttonType: ButtonType.outline,
+                    ),
 
                   TextField(
                     controller: _descriptionController,
