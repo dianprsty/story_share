@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/datasource/local/authentication_local_datasource.dart';
@@ -28,6 +29,7 @@ import '../../presentation/shared/bloc/theme/theme_bloc.dart';
 import '../../presentation/upload/bloc/upload_bloc.dart';
 import '../route/go_router_config.dart';
 import '../service/api_service.dart';
+import '../service/map_service.dart';
 import '../service/theme_service.dart';
 
 final getIt = GetIt.instance;
@@ -38,6 +40,9 @@ Future<void> setup() async {
   getIt.registerLazySingleton<ApiService>(() => ApiService());
   getIt.registerLazySingleton<ThemeService>(() => ThemeService(getIt()));
   getIt.registerLazySingleton<GoRouter>(() => GoRouterConfig.router(getIt()));
+  getIt.registerLazySingleton<MapService>(
+    () => MapService(location: Location()),
+  );
 
   getIt.registerLazySingleton<AuthenticationRemoteDatasource>(
     () => AuthenticationRemoteDatasourceImpl(apiService: getIt()),

@@ -151,5 +151,9 @@
   "storyNotFound": "Cerita tidak ditemukan",
   "@storyNotFound": {
     "description": "Text informasi cerita tidak ditemukan"
+  },
+  "seeOnMap": "Lihat di Peta",
+  "@seeOnMap": {
+    "description": "Text untuk tombol lihat di peta"
   }
 }

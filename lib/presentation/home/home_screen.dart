@@ -136,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 bool isFirstPage = state.queryParams.page == 1;
                 return switch (state.status) {
                   GeneralState.loading || GeneralState.success =>
-                    isEmpty
+                    isEmpty && state.status.isSuccess
                         ? Center(child: Text(context.l10n.emptyStories))
                         : isFirstPage && state.status.isLoading
                         ? Center(child: WavyLoadingIndicator())

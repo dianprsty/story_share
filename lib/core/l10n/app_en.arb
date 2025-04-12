@@ -34,6 +34,6 @@
   "hoursAgo": "{time, plural, one {{time} hour ago} other {{time} hours ago}}",
   "daysAgo": "{time, plural, one {{time} day ago} other {{time} days ago}}",
   "emptyStories": "No stories yet",
-  "storyNotFound": "Story not found"
-
+  "storyNotFound": "Story not found",
+  "seeOnMap": "See on Map"
 }

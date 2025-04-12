@@ -24,7 +24,9 @@ class PostRemoteDatasourceImpl implements PostRemoteDatasource {
        _sharedPreferences = sharedPreferences;
 
   @override
-  Future<Result<List<PostModel>>> getPosts(Map<String, dynamic> queryParams) async {
+  Future<Result<List<PostModel>>> getPosts(
+    Map<String, dynamic> queryParams,
+  ) async {
     try {
       String token = _sharedPreferences.getString(tokenKey) ?? '';
       if (token.isEmpty) return Result.failed('Unauthorized');
@@ -51,14 +53,19 @@ class PostRemoteDatasourceImpl implements PostRemoteDatasource {
 
   @override
   Future<Result<String>> uploadPost(UploadRequestModel data) async {
+    Map<String, dynamic> body = {
+      'description': data.description,
+      'photo': await MultipartFile.fromFile(
+        data.image.path,
+        filename: data.image.path.split('/').last,
+      ),
+    };
+
+    if (data.lat != null && data.lon != null) {
+      body.addAll({'lat': data.lat, 'lon': data.lon});
+    }
     try {
-      final formData = FormData.fromMap({
-        'description': data.description,
-        'photo': await MultipartFile.fromFile(
-          data.image.path,
-          filename: data.image.path.split('/').last,
-        ),
-      });
+      final formData = FormData.fromMap(body);
 
       String token = _sharedPreferences.getString(tokenKey) ?? '';
       if (token.isEmpty) return Result.failed('Unauthorized');

@@ -4,9 +4,8 @@ part 'post_entity.freezed.dart';
 
 @freezed
 abstract class PostEntity with _$PostEntity {
-
   factory PostEntity({
-     String? id,
+    String? id,
     String? name,
     String? description,
     String? photoUrl,
@@ -14,5 +13,4 @@ abstract class PostEntity with _$PostEntity {
     double? lat,
     double? lon,
   }) = _PostEntity;
-
 }

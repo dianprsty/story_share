@@ -28,9 +28,15 @@ class PostRepositoryImpl implements PostRepository {
 
   @override
   Future<Result<String>> uploadPost(UploadPostParam data) async {
-    final result = await _postRemoteDatasource.uploadPost(
-      UploadRequestModel(image: data.image, description: data.description),
+    var body = UploadRequestModel(
+      image: data.image,
+      description: data.description,
     );
+
+    if (data.lat != null && data.lon != null) {
+      body = body.copyWith(lat: data.lat, lon: data.lon);
+    }
+    final result = await _postRemoteDatasource.uploadPost(body);
 
     return result;
   }

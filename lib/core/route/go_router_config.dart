@@ -5,6 +5,7 @@ import '../../presentation/auth/login_screen.dart';
 import '../../presentation/auth/register_screen.dart';
 import '../../presentation/detail/detail_screen.dart';
 import '../../presentation/home/home_screen.dart';
+import '../../presentation/maps/maps_detail_screen.dart';
 import '../../presentation/upload/add_new_post_screen.dart';
 import '../../presentation/upload/camera_capture_page.dart';
 import '../constant/strings.dart';
@@ -15,7 +16,8 @@ enum AppRoute {
   register(name: 'register', path: '/register'),
   addStory(name: 'add-story', path: '/add-story'),
   detailStory(name: 'detail', path: '/detail/:id'),
-  camera(name: 'camera', path: '/camera');
+  camera(name: 'camera', path: '/camera'),
+  mapDetail(name: 'mapDetail', path: '/map-detail');
 
   const AppRoute({required this.name, required this.path});
 
@@ -60,7 +62,24 @@ class GoRouterConfig {
         path: AppRoute.camera.path,
         name: AppRoute.camera.name,
         builder: (context, state) => const CameraCapturePage(),
-      )
+      ),
+      GoRoute(
+        path: AppRoute.mapDetail.path,
+        name: AppRoute.mapDetail.name,
+        builder: (context, state) {
+          String? id = state.uri.queryParameters['id'];
+          String? lat = state.uri.queryParameters['lat'];
+          String? lng = state.uri.queryParameters['lng'];
+          bool isFromPost = state.extra as bool? ?? false;
+
+          return MapsDetailScreen(
+            lat: lat,
+            lng: lng,
+            id: id,
+            isFromPost: isFromPost,
+          );
+        },
+      ),
     ],
 
     redirect: (context, state) async {

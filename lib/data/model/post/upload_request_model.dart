@@ -6,10 +6,10 @@ part 'upload_request_model.freezed.dart';
 
 @freezed
 abstract class UploadRequestModel with _$UploadRequestModel {
-
   factory UploadRequestModel({
     required File image,
-    required String description
+    required String description,
+    double? lat,
+    double? lon,
   }) = _UploadRequestModel;
-
 }

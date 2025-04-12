@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UploadRequestModel {
 
- File get image; String get description;
+ File get image; String get description; double? get lat; double? get lon;
 /// Create a copy of UploadRequestModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $UploadRequestModelCopyWith<UploadRequestModel> get copyWith => _$UploadRequestM
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UploadRequestModel&&(identical(other.image, image) || other.image == image)&&(identical(other.description, description) || other.description == description));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UploadRequestModel&&(identical(other.image, image) || other.image == image)&&(identical(other.description, description) || other.description == description)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,image,description);
+int get hashCode => Object.hash(runtimeType,image,description,lat,lon);
 
 @override
 String toString() {
-  return 'UploadRequestModel(image: $image, description: $description)';
+  return 'UploadRequestModel(image: $image, description: $description, lat: $lat, lon: $lon)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $UploadRequestModelCopyWith<$Res>  {
   factory $UploadRequestModelCopyWith(UploadRequestModel value, $Res Function(UploadRequestModel) _then) = _$UploadRequestModelCopyWithImpl;
 @useResult
 $Res call({
- File image, String description
+ File image, String description, double? lat, double? lon
 });
 
 
@@ -63,11 +63,13 @@ class _$UploadRequestModelCopyWithImpl<$Res>
 
 /// Create a copy of UploadRequestModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? image = null,Object? description = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? image = null,Object? description = null,Object? lat = freezed,Object? lon = freezed,}) {
   return _then(_self.copyWith(
 image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
 as File,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,
+as String,lat: freezed == lat ? _self.lat : lat // ignore: cast_nullable_to_non_nullable
+as double?,lon: freezed == lon ? _self.lon : lon // ignore: cast_nullable_to_non_nullable
+as double?,
   ));
 }
 
@@ -78,11 +80,13 @@ as String,
 
 
 class _UploadRequestModel implements UploadRequestModel {
-   _UploadRequestModel({required this.image, required this.description});
+   _UploadRequestModel({required this.image, required this.description, this.lat, this.lon});
   
 
 @override final  File image;
 @override final  String description;
+@override final  double? lat;
+@override final  double? lon;
 
 /// Create a copy of UploadRequestModel
 /// with the given fields replaced by the non-null parameter values.
@@ -94,16 +98,16 @@ _$UploadRequestModelCopyWith<_UploadRequestModel> get copyWith => __$UploadReque
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UploadRequestModel&&(identical(other.image, image) || other.image == image)&&(identical(other.description, description) || other.description == description));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UploadRequestModel&&(identical(other.image, image) || other.image == image)&&(identical(other.description, description) || other.description == description)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,image,description);
+int get hashCode => Object.hash(runtimeType,image,description,lat,lon);
 
 @override
 String toString() {
-  return 'UploadRequestModel(image: $image, description: $description)';
+  return 'UploadRequestModel(image: $image, description: $description, lat: $lat, lon: $lon)';
 }
 
 
@@ -114,7 +118,7 @@ abstract mixin class _$UploadRequestModelCopyWith<$Res> implements $UploadReques
   factory _$UploadRequestModelCopyWith(_UploadRequestModel value, $Res Function(_UploadRequestModel) _then) = __$UploadRequestModelCopyWithImpl;
 @override @useResult
 $Res call({
- File image, String description
+ File image, String description, double? lat, double? lon
 });
 
 
@@ -131,11 +135,13 @@ class __$UploadRequestModelCopyWithImpl<$Res>
 
 /// Create a copy of UploadRequestModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? image = null,Object? description = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? image = null,Object? description = null,Object? lat = freezed,Object? lon = freezed,}) {
   return _then(_UploadRequestModel(
 image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
 as File,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,
+as String,lat: freezed == lat ? _self.lat : lat // ignore: cast_nullable_to_non_nullable
+as double?,lon: freezed == lon ? _self.lon : lon // ignore: cast_nullable_to_non_nullable
+as double?,
   ));
 }
 

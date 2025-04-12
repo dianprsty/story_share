@@ -10,6 +10,9 @@ class CustomButton extends StatelessWidget {
   final ButtonType buttonType;
   final bool isLoading;
   final bool isDisabled;
+  final Widget? leadingIcon;
+  final VisualDensity visualDensity;
+  final MainAxisAlignment alignment;
 
   const CustomButton({
     super.key,
@@ -18,6 +21,9 @@ class CustomButton extends StatelessWidget {
     required this.buttonType,
     this.isLoading = false,
     this.isDisabled = false,
+    this.leadingIcon,
+    this.visualDensity = VisualDensity.comfortable,
+    this.alignment = MainAxisAlignment.center,
   });
 
   @override
@@ -28,6 +34,7 @@ class CustomButton extends StatelessWidget {
           buttonType == ButtonType.primary
               ? ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                  visualDensity: visualDensity,
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   padding: EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
@@ -39,16 +46,24 @@ class CustomButton extends StatelessWidget {
                 child:
                     isLoading
                         ? const WavyLoadingIndicator()
-                        : Text(
-                          text,
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Theme.of(context).colorScheme.onPrimary,
-                          ),
+                        : Row(
+                          mainAxisAlignment: alignment,
+                          spacing: 16,
+                          children: [
+                            if (leadingIcon != null) leadingIcon!,
+                            Text(
+                              text,
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
+                            ),
+                          ],
                         ),
               )
               : OutlinedButton(
                 style: OutlinedButton.styleFrom(
+                  visualDensity: visualDensity,
                   padding: EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -58,7 +73,14 @@ class CustomButton extends StatelessWidget {
                 child:
                     isLoading
                         ? const WavyLoadingIndicator()
-                        : Text(text, style: TextStyle(fontSize: 16)),
+                        : Row(
+                          mainAxisAlignment: alignment,
+                          spacing: 16,
+                          children: [
+                            if (leadingIcon != null) leadingIcon!,
+                            Text(text, style: TextStyle(fontSize: 16)),
+                          ],
+                        ),
               ),
     );
   }

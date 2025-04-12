@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../core/constant/general_state.dart';
@@ -14,7 +15,6 @@ import '../../domain/entities/query_param/query_param.dart';
 import '../../domain/usecase/upload_post/upload_post_param.dart';
 import '../home/bloc/post_list_bloc.dart';
 import '../shared/widget/custom_button.dart';
-import '../shared/widget/wavy_loading_indicator.dart';
 
 import 'bloc/upload_bloc.dart';
 
@@ -27,6 +27,8 @@ class AddNewPostScreen extends StatefulWidget {
 
 class _AddNewPostScreenState extends State<AddNewPostScreen> {
   File? _selectedImage;
+  LatLng? _selectedLocation;
+  String? _locationInfo;
   final TextEditingController _descriptionController = TextEditingController();
 
   Future<void> _pickFromGallery() async {
@@ -47,6 +49,13 @@ class _AddNewPostScreenState extends State<AddNewPostScreen> {
       image: _selectedImage!,
       description: _descriptionController.text,
     );
+
+    if (_selectedLocation != null) {
+      data = data.copyWith(
+        lat: _selectedLocation!.latitude,
+        lon: _selectedLocation!.longitude,
+      );
+    }
 
     context.read<UploadBloc>().add(UploadEvent.upload(data));
   }
@@ -82,8 +91,8 @@ class _AddNewPostScreenState extends State<AddNewPostScreen> {
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Column(
+                spacing: 20,
                 children: [
-                  
                   if (_selectedImage != null)
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12),
@@ -116,7 +125,6 @@ class _AddNewPostScreenState extends State<AddNewPostScreen> {
                         ),
                       ),
                     ),
-                  const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -132,8 +140,29 @@ class _AddNewPostScreenState extends State<AddNewPostScreen> {
                       ),
                     ],
                   ),
+                  CustomButton(
+                    text: 'pilih lokasi',
+                    visualDensity: VisualDensity.compact,
+                    leadingIcon: Icon(Icons.map_outlined),
+                    onPressed: () async {
+                      var result = await context.pushNamed(
+                        AppRoute.mapDetail.name,
+                        extra: true,
+                      );
 
-                  const SizedBox(height: 20),
+                      if (result != null) {
+                        var (latLng, info) = result as (LatLng, String);
+                        setState(() {
+                          _selectedLocation = latLng;
+                          _locationInfo = info;
+                        });
+                      }
+                    },
+                    buttonType: ButtonType.outline,
+                  ),
+
+                  if (_selectedLocation != null)
+                    Text(_locationInfo ?? _selectedLocation.toString()),
 
                   TextField(
                     controller: _descriptionController,
@@ -150,14 +179,12 @@ class _AddNewPostScreenState extends State<AddNewPostScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 24),
                   CustomButton(
                     isLoading: state.status == GeneralState.loading,
                     onPressed: () => _uploadPost(context),
                     text: context.l10n.upload,
                     buttonType: ButtonType.primary,
                   ),
-                  const SizedBox(height: 24),
                   CustomButton(
                     isDisabled: state.status == GeneralState.loading,
                     onPressed: () => context.goNamed(AppRoute.home.name),
