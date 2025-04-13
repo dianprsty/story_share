@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 import 'core/config/flavor_config.dart';
 import 'core/di/injection.dart';
+import 'core/generated/l10n/app_localizations.dart';
 import 'presentation/shared/bloc/l10n/l10n_bloc.dart';
 import 'presentation/shared/bloc/theme/theme_bloc.dart';
 import 'presentation/shared/style/theme.dart';
